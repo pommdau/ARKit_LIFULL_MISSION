@@ -15,8 +15,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
     
-    var dotNodes = [SCNNode]()
-    var textNode = SCNNode()
+    var dotNodes = [DotNode]()
+    var distanceLabelNodes = [DistanceLabelNode]()
     
     // MARK: - Lifecycle
     
@@ -52,10 +52,16 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if dotNodes.count >= 2 {
+            
             for dot in dotNodes {
                 dot.removeFromParentNode()
             }
-            dotNodes = [SCNNode]()
+            dotNodes = [DotNode]()
+            
+            for distanceLabelNode in distanceLabelNodes {
+                distanceLabelNode.removeFromParentNode()
+            }
+            distanceLabelNodes = [DistanceLabelNode]()
         }
         
         // タッチした2D座標 -> AR空間の3D座標
@@ -96,19 +102,12 @@ class ViewController: UIViewController {
     }
     
     func updateText(text: String, atPosition position: SCNVector3) {
-        textNode.removeFromParentNode()
-        
-        let textGeometry = SCNText(string: text, extrusionDepth: 1.0)
-//        let material = SCNMaterial()
-//        material.diffuse.contents = UIColor.red
-//        textGeometry.materials = [material]
-//        let textNode = SCNNode(geometry: textGeometry)
-        textGeometry.firstMaterial?.diffuse.contents = UIColor.red  // Materialが1つしかない場合はこう書ける？
-
-        textNode = SCNNode(geometry: textGeometry)
-        textNode.position = SCNVector3(x: position.x, y: position.y + 0.01, z: position.z)
-        textNode.scale = SCNVector3(0.01, 0.01, 0.01)  // 1%に縮小
-        sceneView.scene.rootNode.addChildNode(textNode)
+        if distanceLabelNodes.count > 0 {
+            distanceLabelNodes[0].removeFromParentNode()
+        }
+        print("DEBUG: \(distanceLabelNodes.count)")
+        distanceLabelNodes.append(DistanceLabelNode(text: "sample", position: position))
+        sceneView.scene.rootNode.addChildNode(distanceLabelNodes[0])
     }
 }
 
