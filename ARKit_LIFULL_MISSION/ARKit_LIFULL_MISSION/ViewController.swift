@@ -63,8 +63,9 @@ class ViewController: UIViewController {
         
         let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
         
-        if needsMappingFinish(withDotNode: dotNode) {
+        if needsFinishMapping(withDotNode: dotNode) {
             print("DEBUG: マッピングを終了します")
+            showFinishMappingDialog()
             return
         }
         
@@ -75,13 +76,29 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
+        undoAddingDotNode()
+    }
+    
+    @IBAction func trashButtonTapped(_ sender: UIButton) {
+        removeAllDotNodes()
+    }
+    
+    // MARK: - Helpers
+    
+    private func configureActionButtonsUI() {
+        let existNode = dotNodes.count > 0
+        undoButton.isEnabled = existNode
+        trashButton.isEnabled = existNode
+    }
+    
+    private func undoAddingDotNode() {
         guard dotNodes.count > 0 else { return }
         
         dotNodes.last?.removeFromParentNode()
         dotNodes.removeLast()
     }
     
-    @IBAction func trashButtonTapped(_ sender: UIButton) {
+    private func removeAllDotNodes() {
         guard dotNodes.count > 0 else { return }
         
         for dotNode in dotNodes {
@@ -89,17 +106,9 @@ class ViewController: UIViewController {
         }
         dotNodes.removeAll()
     }
-    
-    
-    // MARK: - Helpers
-
-    private func configureActionButtonsUI() {
-        let existNode = dotNodes.count > 0
-        undoButton.isEnabled = existNode
-        trashButton.isEnabled = existNode
-    }
-    
-    private func needsMappingFinish(withDotNode newDotNode: DotNode) -> Bool {
+        
+    private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
+        
         guard dotNodes.count >= 2 else { return false }  // マッピングは点が3つ以上でないと終了させない
         
         let startDotNode = dotNodes.first!
@@ -114,6 +123,25 @@ class ViewController: UIViewController {
         }
         
         return false
+    }
+    
+    private func showFinishMappingDialog() {
+        let alertController = UIAlertController(title: "計測が完了しました！", message: "", preferredStyle: .alert)
+        
+        alertController.addAction(
+            UIAlertAction(title: "結果を見る",
+                          style: .default,
+                          handler: { _ in
+                            print("DEBUG: 結果を表示するダイアログへ遷移させる")
+                          }))
+        
+        alertController.addAction(
+            UIAlertAction(title: "最初からやり直す",
+                          style: .destructive,
+                          handler: { _ in
+                            self.trashButtonTapped(UIButton())
+                          }))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
