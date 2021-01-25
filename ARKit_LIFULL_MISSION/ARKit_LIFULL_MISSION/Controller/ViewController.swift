@@ -64,7 +64,6 @@ class ViewController: UIViewController {
         let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
         
         if needsFinishMapping(withDotNode: dotNode) {
-            print("DEBUG: マッピングを終了します")
             showFinishMappingDialog()
             return
         }
@@ -86,9 +85,9 @@ class ViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureActionButtonsUI() {
-        let existNode = dotNodes.count > 0
-        undoButton.isEnabled = existNode
-        trashButton.isEnabled = existNode
+        let existsNode = dotNodes.count > 0
+        undoButton.isEnabled = existsNode
+        trashButton.isEnabled = existsNode
     }
     
     private func undoAddingDotNode() {
@@ -109,13 +108,16 @@ class ViewController: UIViewController {
         
     private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
         
-        guard dotNodes.count >= 2 else { return false }  // マッピングは点が3つ以上でないと終了させない
+        // マッピングは点が3つ以上でないと終了させない
+        guard dotNodes.count >= 2 ,
+              let startingDotNode = dotNodes.first else {
+            return false
+        }
         
-        let startDotNode = dotNodes.first!
         let distance = sqrt(
-            pow(newDotNode.position.x - startDotNode.position.x, 2) +
-            pow(newDotNode.position.y - startDotNode.position.y, 2) +
-            pow(newDotNode.position.z - startDotNode.position.z, 2)
+            pow(newDotNode.position.x - startingDotNode.position.x, 2) +
+            pow(newDotNode.position.y - startingDotNode.position.y, 2) +
+            pow(newDotNode.position.z - startingDotNode.position.z, 2)
         )
         
         if distance <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
@@ -139,11 +141,13 @@ class ViewController: UIViewController {
             UIAlertAction(title: "最初からやり直す",
                           style: .destructive,
                           handler: { _ in
-                            self.trashButtonTapped(UIButton())
+                            self.removeAllDotNodes()
                           }))
         self.present(alertController, animated: true, completion: nil)
     }
 }
+
+// MARK: - ARSCNViewDelegate Methods
 
 extension ViewController: ARSCNViewDelegate {
     
