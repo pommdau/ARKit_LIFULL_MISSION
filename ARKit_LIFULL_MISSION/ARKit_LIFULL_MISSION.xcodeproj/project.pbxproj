@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
+		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
 		D0CF294925BF13C4002347EA /* DotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF294825BF13C4002347EA /* DotNode.swift */; };
 		D0CF294C25BF18C1002347EA /* DistanceLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF294B25BF18C1002347EA /* DistanceLabelNode.swift */; };
 		D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BB25BDC22900F83325 /* AppDelegate.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		D0CF294825BF13C4002347EA /* DotNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotNode.swift; sourceTree = "<group>"; };
 		D0CF294B25BF18C1002347EA /* DistanceLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceLabelNode.swift; sourceTree = "<group>"; };
 		D0EB30B825BDC22900F83325 /* ARKit_LIFULL_MISSION.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_LIFULL_MISSION.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,6 +47,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D018DC1125BF30CD009D3CDC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */,
+				D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		D0EB30AF25BDC22900F83325 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +75,7 @@
 		D0EB30BA25BDC22900F83325 /* ARKit_LIFULL_MISSION */ = {
 			isa = PBXGroup;
 			children = (
+				D018DC1125BF30CD009D3CDC /* Utils */,
 				D0EB30BB25BDC22900F83325 /* AppDelegate.swift */,
 				D0EB30BD25BDC22900F83325 /* art.scnassets */,
 				D0EB30BF25BDC22900F83325 /* ViewController.swift */,
@@ -148,7 +162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0CF294C25BF18C1002347EA /* DistanceLabelNode.swift in Sources */,
+				D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */,
 				D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */,
+				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,
 				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
 				D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */,

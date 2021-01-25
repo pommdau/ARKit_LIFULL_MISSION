@@ -17,8 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
     
-    var dotNodes = [DotNode]()
-    var distanceLabelNodes = [DistanceLabelNode]()
+    private var dotNodes = [DotNode]() {
+        didSet { configureActionButtonsUI() }
+    }
     
     // MARK: - Lifecycle
     
@@ -29,6 +30,8 @@ class ViewController: UIViewController {
         sceneView.delegate = self
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
+        
+        configureActionButtonsUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,75 +55,93 @@ class ViewController: UIViewController {
     // MARK: - Override Methods
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if dotNodes.count >= 2 {
-            
-            for dot in dotNodes {
-                dot.removeFromParentNode()
-            }
-            dotNodes = [DotNode]()
-            
-            for distanceLabelNode in distanceLabelNodes {
-                distanceLabelNode.removeFromParentNode()
-            }
-            distanceLabelNodes = [DistanceLabelNode]()
+        // タッチした2D座標 -> AR空間の3D座標        
+        guard let touchLocation = touches.first?.location(in: sceneView),
+              let hitResult = sceneView.hitTest(touchLocation, types: .existingPlane).first else {
+            return
         }
         
-        // タッチした2D座標 -> AR空間の3D座標
-        if let touchLocation = touches.first?.location(in: sceneView) {
-            let hitTestResults = sceneView.hitTest(touchLocation, types: .existingPlane)
-            
-            if let hitResult = hitTestResults.first {
-                addDot(at: hitResult)
-            }
+        let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
+        
+        if needsFinishMapping(withDotNode: dotNode) {
+            print("DEBUG: マッピングを終了します")
+            showFinishMappingDialog()
+            return
         }
+        
+        sceneView.scene.rootNode.addChildNode(dotNode)
+        dotNodes.append(dotNode)
     }
     
     // MARK: - Actions
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
-        print("DEBUG: undoButtonTapped")
+        undoAddingDotNode()
     }
     
     @IBAction func trashButtonTapped(_ sender: UIButton) {
-        print("DEBUG: trashButtonTapped")
+        removeAllDotNodes()
     }
-    
     
     // MARK: - Helpers
     
-    // MARK: Dot Rendering Methods
-    
-    func addDot(at hitResult: ARHitTestResult) {
-        let dotNode = DotNode(hitResult: hitResult)
-        sceneView.scene.rootNode.addChildNode(dotNode)
-        dotNodes.append(dotNode)
-        
-        if dotNodes.count >= 2 {
-            calculate()
-        }
+    private func configureActionButtonsUI() {
+        let existNode = dotNodes.count > 0
+        undoButton.isEnabled = existNode
+        trashButton.isEnabled = existNode
     }
     
-    func calculate() {
-        let start = dotNodes[0]
-        let end = dotNodes[1]
+    private func undoAddingDotNode() {
+        guard dotNodes.count > 0 else { return }
         
+        dotNodes.last?.removeFromParentNode()
+        dotNodes.removeLast()
+    }
+    
+    private func removeAllDotNodes() {
+        guard dotNodes.count > 0 else { return }
+        
+        for dotNode in dotNodes {
+            dotNode.removeFromParentNode()
+        }
+        dotNodes.removeAll()
+    }
+        
+    private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
+        
+        guard dotNodes.count >= 2 else { return false }  // マッピングは点が3つ以上でないと終了させない
+        
+        let startDotNode = dotNodes.first!
         let distance = sqrt(
-            pow(end.position.x - start.position.x, 2) +
-            pow(end.position.y - start.position.y, 2) +
-            pow(end.position.z - start.position.z, 2)
+            pow(newDotNode.position.x - startDotNode.position.x, 2) +
+            pow(newDotNode.position.y - startDotNode.position.y, 2) +
+            pow(newDotNode.position.z - startDotNode.position.z, 2)
         )
         
-        updateText(text: "\(distance * 100)cm)", atPosition: end.position)
+        if distance <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
+            return true
+        }
+        
+        return false
     }
     
-    func updateText(text: String, atPosition position: SCNVector3) {
-        if distanceLabelNodes.count > 0 {
-            distanceLabelNodes[0].removeFromParentNode()
-        }
-        print("DEBUG: \(distanceLabelNodes.count)")
-        distanceLabelNodes.append(DistanceLabelNode(text: "sample", position: position))
-        sceneView.scene.rootNode.addChildNode(distanceLabelNodes[0])
+    private func showFinishMappingDialog() {
+        let alertController = UIAlertController(title: "計測が完了しました！", message: "", preferredStyle: .alert)
+        
+        alertController.addAction(
+            UIAlertAction(title: "結果を見る",
+                          style: .default,
+                          handler: { _ in
+                            print("DEBUG: 結果を表示するダイアログへ遷移させる")
+                          }))
+        
+        alertController.addAction(
+            UIAlertAction(title: "最初からやり直す",
+                          style: .destructive,
+                          handler: { _ in
+                            self.trashButtonTapped(UIButton())
+                          }))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -132,12 +153,11 @@ extension ViewController: ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        
-        guard let planeNode = node.childNodes.first as? PlaneNode else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor,
+              let planeNode = node.childNodes.first as? PlaneNode else {
+            return
+        }
         
         planeNode.update(anchor: planeAnchor)
     }
-    
-    
 }
