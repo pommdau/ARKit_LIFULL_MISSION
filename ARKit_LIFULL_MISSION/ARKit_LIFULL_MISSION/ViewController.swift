@@ -17,7 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
     
-    private var dotNodes = [DotNode]()
+    private var dotNodes = [DotNode]() {
+        didSet { configureActionButtonsUI() }
+    }
     
     // MARK: - Lifecycle
     
@@ -28,6 +30,8 @@ class ViewController: UIViewController {
         sceneView.delegate = self
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
+        
+        configureActionButtonsUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,9 +56,8 @@ class ViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // タッチした2D座標 -> AR空間の3D座標        
-        guard
-            let touchLocation = touches.first?.location(in: sceneView),
-            let hitResult = sceneView.hitTest(touchLocation, types: .existingPlane).first else {
+        guard let touchLocation = touches.first?.location(in: sceneView),
+              let hitResult = sceneView.hitTest(touchLocation, types: .existingPlane).first else {
             return
         }
         
@@ -66,16 +69,29 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
-        print("DEBUG: undoButtonTapped")
+        guard dotNodes.count > 0 else { return }
+        
+        dotNodes.last?.removeFromParentNode()
+        dotNodes.removeLast()
     }
     
     @IBAction func trashButtonTapped(_ sender: UIButton) {
-        print("DEBUG: trashButtonTapped")
+        guard dotNodes.count > 0 else { return }
+        
+        for dotNode in dotNodes {
+            dotNode.removeFromParentNode()
+        }
+        dotNodes.removeAll()
     }
     
     
     // MARK: - Helpers
 
+    private func configureActionButtonsUI() {
+        let existNode = dotNodes.count > 0
+        undoButton.isEnabled = existNode
+        trashButton.isEnabled = existNode
+    }
 }
 
 extension ViewController: ARSCNViewDelegate {
@@ -86,9 +102,10 @@ extension ViewController: ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        
-        guard let planeNode = node.childNodes.first as? PlaneNode else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor,
+              let planeNode = node.childNodes.first as? PlaneNode else {
+            return
+        }
         
         planeNode.update(anchor: planeAnchor)
     }
