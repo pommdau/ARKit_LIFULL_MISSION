@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
     
-    private var branchNode: BranchNode!
+    private var branchNodes = [BranchNode]()
     
     // MARK: - Lifecycle
     
@@ -65,17 +65,26 @@ class ViewController: UIViewController {
         
         let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
         
+        // 計測完了かどうかを確認する
         if needsFinishMapping(withDotNode: dotNode) {
+            let branchNode = BranchNode(from: dotNodes.last!.position,
+                                        to: dotNodes.first!.position)
+            branchNodes.append(branchNode)
+            sceneView.scene.rootNode.addChildNode(branchNode)
+            
             showFinishMappingDialog()
             return
         }
         
-        sceneView.scene.rootNode.addChildNode(dotNode)
+        // タップされた位置にDotNodeを追加
         dotNodes.append(dotNode)
+        sceneView.scene.rootNode.addChildNode(dotNode)
         
+        // DotNode間にBranchNodeを追加
         if dotNodes.count >= 2 {
-            let branchNode = BranchNode(startingNode: dotNodes[0], endingNode: dotNodes[1])
-            self.branchNode = branchNode
+            let branchNode = BranchNode(from: dotNodes[dotNodes.count - 2].position,
+                                        to: dotNodes[dotNodes.count - 1].position)
+            branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
         }
         
@@ -102,6 +111,13 @@ class ViewController: UIViewController {
     private func undoAddingDotNode() {
         guard dotNodes.count > 0 else { return }
         
+        // 直前のBranchNodeを削除
+        if dotNodes.count >= 2 {
+            branchNodes.last?.removeFromParentNode()
+            branchNodes.removeLast()
+        }
+        
+        // 直前のDotNodeを削除
         dotNodes.last?.removeFromParentNode()
         dotNodes.removeLast()
     }
@@ -113,6 +129,11 @@ class ViewController: UIViewController {
             dotNode.removeFromParentNode()
         }
         dotNodes.removeAll()
+        
+        for branchNode in branchNodes {
+            branchNode.removeFromParentNode()
+        }
+        branchNodes.removeAll()
     }
         
     private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
