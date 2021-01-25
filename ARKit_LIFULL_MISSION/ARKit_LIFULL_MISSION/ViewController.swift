@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
     
-    var dotNodes = [DotNode]()
-    var distanceLabelNodes = [DistanceLabelNode]()
+    private var dotNodes = [DotNode]()
     
     // MARK: - Lifecycle
     
@@ -52,28 +51,16 @@ class ViewController: UIViewController {
     // MARK: - Override Methods
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if dotNodes.count >= 2 {
-            
-            for dot in dotNodes {
-                dot.removeFromParentNode()
-            }
-            dotNodes = [DotNode]()
-            
-            for distanceLabelNode in distanceLabelNodes {
-                distanceLabelNode.removeFromParentNode()
-            }
-            distanceLabelNodes = [DistanceLabelNode]()
+        // タッチした2D座標 -> AR空間の3D座標        
+        guard
+            let touchLocation = touches.first?.location(in: sceneView),
+            let hitResult = sceneView.hitTest(touchLocation, types: .existingPlane).first else {
+            return
         }
         
-        // タッチした2D座標 -> AR空間の3D座標
-        if let touchLocation = touches.first?.location(in: sceneView) {
-            let hitTestResults = sceneView.hitTest(touchLocation, types: .existingPlane)
-            
-            if let hitResult = hitTestResults.first {
-                addDot(at: hitResult)
-            }
-        }
+        let dotNode = DotNode(hitResult: hitResult)
+        sceneView.scene.rootNode.addChildNode(dotNode)
+        dotNodes.append(dotNode)
     }
     
     // MARK: - Actions
@@ -88,40 +75,7 @@ class ViewController: UIViewController {
     
     
     // MARK: - Helpers
-    
-    // MARK: Dot Rendering Methods
-    
-    func addDot(at hitResult: ARHitTestResult) {
-        let dotNode = DotNode(hitResult: hitResult)
-        sceneView.scene.rootNode.addChildNode(dotNode)
-        dotNodes.append(dotNode)
-        
-        if dotNodes.count >= 2 {
-            calculate()
-        }
-    }
-    
-    func calculate() {
-        let start = dotNodes[0]
-        let end = dotNodes[1]
-        
-        let distance = sqrt(
-            pow(end.position.x - start.position.x, 2) +
-            pow(end.position.y - start.position.y, 2) +
-            pow(end.position.z - start.position.z, 2)
-        )
-        
-        updateText(text: "\(distance * 100)cm)", atPosition: end.position)
-    }
-    
-    func updateText(text: String, atPosition position: SCNVector3) {
-        if distanceLabelNodes.count > 0 {
-            distanceLabelNodes[0].removeFromParentNode()
-        }
-        print("DEBUG: \(distanceLabelNodes.count)")
-        distanceLabelNodes.append(DistanceLabelNode(text: "sample", position: position))
-        sceneView.scene.rootNode.addChildNode(distanceLabelNodes[0])
-    }
+
 }
 
 extension ViewController: ARSCNViewDelegate {
@@ -138,6 +92,4 @@ extension ViewController: ARSCNViewDelegate {
         
         planeNode.update(anchor: planeAnchor)
     }
-    
-    
 }
