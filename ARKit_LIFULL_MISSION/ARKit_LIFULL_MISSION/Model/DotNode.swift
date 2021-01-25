@@ -41,17 +41,3 @@ class DotNode: SCNNode {
     // MARK: - Helpers
     
 }
-
-// Static Methods
-
-extension DotNode {
-    /// 2点のDotNode間の距離を計算する
-    static func calculateDistance(firstDotNode: DotNode, secondDotNode: DotNode) -> Float {
-        let distance = sqrt(
-            pow(secondDotNode.position.x - firstDotNode.position.x, 2) +
-            pow(secondDotNode.position.y - firstDotNode.position.y, 2) +
-            pow(secondDotNode.position.z - firstDotNode.position.z, 2)
-        )
-        return distance
-    }
-}
