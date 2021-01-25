@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var trashButton: UIButton!
     
     var dotNodes = [DotNode]()
     var distanceLabelNodes = [DistanceLabelNode]()
@@ -73,6 +75,17 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func undoButtonTapped(_ sender: UIButton) {
+        print("DEBUG: undoButtonTapped")
+    }
+    
+    @IBAction func trashButtonTapped(_ sender: UIButton) {
+        print("DEBUG: trashButtonTapped")
+    }
+    
     
     // MARK: - Helpers
     
