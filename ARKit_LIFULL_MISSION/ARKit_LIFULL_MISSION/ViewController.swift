@@ -62,6 +62,12 @@ class ViewController: UIViewController {
         }
         
         let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
+        
+        if needsMappingFinish(withDotNode: dotNode) {
+            print("DEBUG: マッピングを終了します")
+            return
+        }
+        
         sceneView.scene.rootNode.addChildNode(dotNode)
         dotNodes.append(dotNode)
     }
@@ -91,6 +97,23 @@ class ViewController: UIViewController {
         let existNode = dotNodes.count > 0
         undoButton.isEnabled = existNode
         trashButton.isEnabled = existNode
+    }
+    
+    private func needsMappingFinish(withDotNode newDotNode: DotNode) -> Bool {
+        guard dotNodes.count >= 2 else { return false }  // マッピングは点が3つ以上でないと終了させない
+        
+        let startDotNode = dotNodes.first!
+        let distance = sqrt(
+            pow(newDotNode.position.x - startDotNode.position.x, 2) +
+            pow(newDotNode.position.y - startDotNode.position.y, 2) +
+            pow(newDotNode.position.z - startDotNode.position.z, 2)
+        )
+        
+        if distance <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
+            return true
+        }
+        
+        return false
     }
 }
 
