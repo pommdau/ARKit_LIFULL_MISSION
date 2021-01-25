@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
     
+    private var branchNode: BranchNode!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -70,6 +72,13 @@ class ViewController: UIViewController {
         
         sceneView.scene.rootNode.addChildNode(dotNode)
         dotNodes.append(dotNode)
+        
+        if dotNodes.count >= 2 {
+            let branchNode = BranchNode(startingNode: dotNodes[0], endingNode: dotNodes[1])
+            self.branchNode = branchNode
+            sceneView.scene.rootNode.addChildNode(branchNode)
+        }
+        
     }
     
     // MARK: - Actions
