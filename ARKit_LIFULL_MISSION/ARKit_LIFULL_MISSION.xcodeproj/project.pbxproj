@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0CF294925BF13C4002347EA /* DotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF294825BF13C4002347EA /* DotNode.swift */; };
 		D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BB25BDC22900F83325 /* AppDelegate.swift */; };
 		D0EB30BE25BDC22900F83325 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D0EB30BD25BDC22900F83325 /* art.scnassets */; };
 		D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BF25BDC22900F83325 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D0CF294825BF13C4002347EA /* DotNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotNode.swift; sourceTree = "<group>"; };
 		D0EB30B825BDC22900F83325 /* ARKit_LIFULL_MISSION.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_LIFULL_MISSION.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EB30BB25BDC22900F83325 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0EB30BD25BDC22900F83325 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				D0EB30BD25BDC22900F83325 /* art.scnassets */,
 				D0EB30BF25BDC22900F83325 /* ViewController.swift */,
 				D0EB30D225BDCA5B00F83325 /* PlaneNode.swift */,
+				D0CF294825BF13C4002347EA /* DotNode.swift */,
 				D0EB30C125BDC22900F83325 /* Main.storyboard */,
 				D0EB30C425BDC22C00F83325 /* Assets.xcassets */,
 				D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */,
+				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
 				D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */,
 			);

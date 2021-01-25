@@ -73,21 +73,8 @@ class ViewController: UIViewController {
     // MARK: Dot Rendering Methods
     
     func addDot(at hitResult: ARHitTestResult) {
-        
-        let dotGeometry = SCNSphere(radius: 0.005)
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.red
-        dotGeometry.materials = [material]
-        
-        let dotNode = SCNNode(geometry: dotGeometry)
-        
-        dotNode.position = SCNVector3(
-            x: hitResult.worldTransform.columns.3.x,
-            y: hitResult.worldTransform.columns.3.y,
-            z: hitResult.worldTransform.columns.3.z
-        )
+        let dotNode = DotNode(hitResult: hitResult)
         sceneView.scene.rootNode.addChildNode(dotNode)
-        
         dotNodes.append(dotNode)
         
         if dotNodes.count >= 2 {
