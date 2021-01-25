@@ -15,13 +15,13 @@ class DotNode: SCNNode {
     
     // MARK: - Lifecycle
     
-    init(hitResult: ARHitTestResult) {
+    init(hitResult: ARHitTestResult, color: UIColor = .lifullSecondaryBrandColor) {
         
         super.init()
         
         let dotGeometry = SCNSphere(radius: 0.005)
         let material = SCNMaterial()
-        material.diffuse.contents = UIColor.red
+        material.diffuse.contents = color
         dotGeometry.materials = [material]
         geometry = dotGeometry
                 

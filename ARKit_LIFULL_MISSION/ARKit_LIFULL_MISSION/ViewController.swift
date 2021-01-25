@@ -61,7 +61,7 @@ class ViewController: UIViewController {
             return
         }
         
-        let dotNode = DotNode(hitResult: hitResult)
+        let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
         sceneView.scene.rootNode.addChildNode(dotNode)
         dotNodes.append(dotNode)
     }
