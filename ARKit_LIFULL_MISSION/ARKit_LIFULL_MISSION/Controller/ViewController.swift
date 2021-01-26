@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
     
+    private var branchNodes = [BranchNode]()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -63,13 +65,29 @@ class ViewController: UIViewController {
         
         let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
         
+        // 計測完了かどうかを確認する
         if needsFinishMapping(withDotNode: dotNode) {
+            let branchNode = BranchNode(from: dotNodes.last!.position,
+                                        to: dotNodes.first!.position)
+            branchNodes.append(branchNode)
+            sceneView.scene.rootNode.addChildNode(branchNode)
+            
             showFinishMappingDialog()
             return
         }
         
-        sceneView.scene.rootNode.addChildNode(dotNode)
+        // タップされた位置にDotNodeを追加
         dotNodes.append(dotNode)
+        sceneView.scene.rootNode.addChildNode(dotNode)
+        
+        // DotNode間にBranchNodeを追加
+        if dotNodes.count >= 2 {
+            let branchNode = BranchNode(from: dotNodes[dotNodes.count - 2].position,
+                                        to: dotNodes[dotNodes.count - 1].position)
+            branchNodes.append(branchNode)
+            sceneView.scene.rootNode.addChildNode(branchNode)
+        }
+        
     }
     
     // MARK: - Actions
@@ -79,7 +97,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func trashButtonTapped(_ sender: UIButton) {
-        removeAllDotNodes()
+        removeAllNodes()
     }
     
     // MARK: - Helpers
@@ -93,17 +111,29 @@ class ViewController: UIViewController {
     private func undoAddingDotNode() {
         guard dotNodes.count > 0 else { return }
         
+        // 直前のBranchNodeを削除
+        if dotNodes.count >= 2 {
+            branchNodes.last?.removeFromParentNode()
+            branchNodes.removeLast()
+        }
+        
+        // 直前のDotNodeを削除
         dotNodes.last?.removeFromParentNode()
         dotNodes.removeLast()
     }
     
-    private func removeAllDotNodes() {
+    private func removeAllNodes() {
         guard dotNodes.count > 0 else { return }
         
         for dotNode in dotNodes {
             dotNode.removeFromParentNode()
         }
         dotNodes.removeAll()
+        
+        for branchNode in branchNodes {
+            branchNode.removeFromParentNode()
+        }
+        branchNodes.removeAll()
     }
         
     private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
@@ -114,13 +144,7 @@ class ViewController: UIViewController {
             return false
         }
         
-        let distance = sqrt(
-            pow(newDotNode.position.x - startingDotNode.position.x, 2) +
-            pow(newDotNode.position.y - startingDotNode.position.y, 2) +
-            pow(newDotNode.position.z - startingDotNode.position.z, 2)
-        )
-        
-        if distance <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
+        if calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
             return true
         }
         
@@ -141,9 +165,19 @@ class ViewController: UIViewController {
             UIAlertAction(title: "最初からやり直す",
                           style: .destructive,
                           handler: { _ in
-                            self.removeAllDotNodes()
+                            self.removeAllNodes()
                           }))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func calculateDistance(from startPoint: SCNVector3, to endPoint: SCNVector3) -> Float {
+        let distance = sqrt(
+            pow(startPoint.x - endPoint.x, 2) +
+            pow(startPoint.y - endPoint.y, 2) +
+            pow(startPoint.z - endPoint.z, 2)
+        )
+        
+        return distance
     }
 }
 
