@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
 
-    private var branchNodes = [BranchNode]()
+    private var branchNodes = [BranchNode]()  // DotNode間に配置する線分オブジェクト
 
     // MARK: - Lifecycle
 
@@ -57,26 +57,55 @@ class ViewController: UIViewController {
     // MARK: - Override Methods
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        // 適切なHitResultを取得する
         // タッチした2D座標 -> AR空間の3D座標
-        guard let touchLocation = touches.first?.location(in: sceneView),
-              let hitResult = sceneView.hitTest(touchLocation, types: .existingPlane).first else {
+        guard let touchLocation = touches.first?.location(in: sceneView) else {
             return
         }
 
-        let dotNode = dotNodes.isEmpty ? DotNode(hitResult: hitResult, color: .lifullBrandColor) : DotNode(hitResult: hitResult)
+        let hitResults = dotNodes.isEmpty ?
+            sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent) :
+            sceneView.hitTest(touchLocation, types: .existingPlane)
+
+        // hitResultsはカメラから近い順にソートされている
+        guard let firstHitResult = hitResults.first else {
+            return
+        }
+        var suitableHitResult = firstHitResult
+
+        // ドットがすでに1つ以上追加されている場合、最初のDotNodeに最もy座標が近い平面の結果を採用する
+        if let startDotNode = dotNodes.first {
+            var minYDifference = Float.greatestFiniteMagnitude
+            hitResults.forEach { hitResult in
+                let yDifference = abs(startDotNode.position.y - hitResult.worldTransform.columns.3.y)
+                if yDifference < minYDifference {
+                    minYDifference = yDifference
+                    suitableHitResult = hitResult
+                }
+            }
+        }
+
+        let dotNode = dotNodes.isEmpty ?
+            DotNode(hitResult: suitableHitResult, color: .lifullBrandColor) :
+            DotNode(hitResult: suitableHitResult)
 
         // 計測完了かどうかを確認する
-        if needsFinishMapping(withDotNode: dotNode) {
-            let branchNode = BranchNode(from: dotNodes.last!.position,
-                                        to: dotNodes.first!.position)
+        if needsFinishMapping(withDotNode: dotNode),
+           let startPosition = dotNodes.last?.position,
+           let endPosition = dotNodes.first?.position {
+            let branchNode = BranchNode(from: startPosition,
+                                        to: endPosition)
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
 
             showFinishMappingDialog()
+
             return
         }
 
         // タップされた位置にDotNodeを追加
+        // TODO: この辺のBranchNodeの処理はまとめられそう
         dotNodes.append(dotNode)
         sceneView.scene.rootNode.addChildNode(dotNode)
 
