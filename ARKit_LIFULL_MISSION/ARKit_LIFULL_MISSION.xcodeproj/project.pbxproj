@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
 		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
+		D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F2A25CAE0F10051376C /* ResultImageView.swift */; };
+		D07D4F2E25CAE1170051376C /* ResultImageView+Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */; };
+		D07D4F3125CAE1310051376C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3025CAE1310051376C /* Coordinate.swift */; };
+		D07D4F3425CAE1560051376C /* UIView+ConvertToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */; };
+		D07D4F3725CAE17F0051376C /* CoordinateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3625CAE17F0051376C /* CoordinateManager.swift */; };
 		D08DAED625BF61F80014D1A8 /* BranchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08DAED525BF61F80014D1A8 /* BranchNode.swift */; };
 		D0CF294925BF13C4002347EA /* DotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF294825BF13C4002347EA /* DotNode.swift */; };
 		D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BB25BDC22900F83325 /* AppDelegate.swift */; };
@@ -23,6 +28,11 @@
 /* Begin PBXFileReference section */
 		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
+		D07D4F2A25CAE0F10051376C /* ResultImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultImageView.swift; sourceTree = "<group>"; };
+		D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultImageView+Drawing.swift"; sourceTree = "<group>"; };
+		D07D4F3025CAE1310051376C /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConvertToImage.swift"; sourceTree = "<group>"; };
+		D07D4F3625CAE17F0051376C /* CoordinateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateManager.swift; sourceTree = "<group>"; };
 		D08DAED525BF61F80014D1A8 /* BranchNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchNode.swift; sourceTree = "<group>"; };
 		D0CF294825BF13C4002347EA /* DotNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotNode.swift; sourceTree = "<group>"; };
 		D0EB30B825BDC22900F83325 /* ARKit_LIFULL_MISSION.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_LIFULL_MISSION.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +62,7 @@
 			children = (
 				D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */,
 				D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */,
+				D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -70,6 +81,10 @@
 			isa = PBXGroup;
 			children = (
 				D0EB30BF25BDC22900F83325 /* ViewController.swift */,
+				D07D4F2A25CAE0F10051376C /* ResultImageView.swift */,
+				D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */,
+				D07D4F3025CAE1310051376C /* Coordinate.swift */,
+				D07D4F3625CAE17F0051376C /* CoordinateManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -203,8 +218,13 @@
 				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,
 				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
+				D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */,
 				D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */,
 				D08DAED625BF61F80014D1A8 /* BranchNode.swift in Sources */,
+				D07D4F2E25CAE1170051376C /* ResultImageView+Drawing.swift in Sources */,
+				D07D4F3725CAE17F0051376C /* CoordinateManager.swift in Sources */,
+				D07D4F3125CAE1310051376C /* Coordinate.swift in Sources */,
+				D07D4F3425CAE1560051376C /* UIView+ConvertToImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,8 +371,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 634C8XNAX7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -360,6 +380,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail.ikeh1024.ARKit-LIFULL-MISSION";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -370,8 +391,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 634C8XNAX7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -379,6 +400,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail.ikeh1024.ARKit-LIFULL-MISSION";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
