@@ -78,6 +78,16 @@ extension UIView {
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
 
+    func setHeight(height: CGFloat) {
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: height).isActive = true
+    }
+
+    func setSizeAspect(widthRatio: CGFloat, heightRatio: CGFloat) {
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalTo: widthAnchor, multiplier: heightRatio / widthRatio).isActive = true
+    }
+
     func addConstraintsToFillView(_ view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         anchor(top: view.topAnchor, left: view.leftAnchor,

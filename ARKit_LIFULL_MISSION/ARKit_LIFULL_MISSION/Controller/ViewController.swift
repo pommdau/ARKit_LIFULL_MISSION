@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
         button.setTitle("debug button", for: .normal)
+        button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
@@ -149,7 +150,7 @@ class ViewController: UIViewController {
         view.addSubview(debugButton)
         debugButton.centerX(inView: view)
         debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
-        debugButton.setDimensions(width: 100, height: 40)
+        debugButton.setDimensions(width: 150, height: 40)
     }
 
     private func configureActionButtonsUI() {
