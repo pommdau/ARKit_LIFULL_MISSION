@@ -11,7 +11,7 @@ class ResultViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var dotNodes = [DotNode]()
+    private var dotCoordinates = [Coordinate]()
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -39,10 +39,9 @@ class ResultViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    convenience init(withDotNodes dotNodes: [DotNode]) {
+    convenience init(withDotCoordinates dotCoordinates: [Coordinate]) {
         self.init(nibName: nil, bundle: nil)
-
-        self.dotNodes = dotNodes
+        self.dotCoordinates = dotCoordinates
     }
 
     override func viewDidLoad() {
@@ -72,32 +71,13 @@ class ResultViewController: UIViewController {
         resultStack.centerY(inView: view)
         resultStack.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 12, paddingRight: 12)
 
-        if let image = createImage(withDotNodes: dotNodes) {
+        if let image = createImage(withDotCoordinates: dotCoordinates) {
             imageView.image = image
         }
     }
 
-    private func createImage(withDotNodes dotNodes: [DotNode]) -> UIImage? {
-
-        // DEBUG
-        if dotNodes.isEmpty {
-            let coordinates = [
-                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-            ]
-            let resultImageView = ResultImageView(dotCoordinates: coordinates)
-            resultImageView.frame.size = CGSize(width: 1024, height: 1024)
-            guard let image = resultImageView.convertToImage() else {
-                return nil
-            }
-
-            return image
-        }
-
-        let coordinates = dotNodes.map { dotNode in Coordinate(dotNode.position.x, dotNode.position.z) }
-        let resultImageView = ResultImageView(dotCoordinates: coordinates)
+    private func createImage(withDotCoordinates dotCoordinates: [Coordinate]) -> UIImage? {
+        let resultImageView = ResultImageView(dotCoordinates: dotCoordinates)
         resultImageView.frame.size = CGSize(width: 1024, height: 1024)
         guard let image = resultImageView.convertToImage() else {
             return nil

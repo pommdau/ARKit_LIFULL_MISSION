@@ -26,8 +26,9 @@ class ViewController: UIViewController {
     private lazy var debugButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
-        button.setTitle("debug button", for: .normal)
+        button.setTitle("Show Debug ResultView", for: .normal)
         button.layer.cornerRadius = 5
+        button.setDimensions(width: 250, height: 40)
         button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
@@ -140,7 +141,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func debugButtonTapped(_ sender: UIButton) {
-        let controller = ResultViewController(withDotNodes: [])
+        let controller = ResultViewController(withDotCoordinates: [
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+        ])
         present(controller, animated: true, completion: nil)
     }
 
@@ -150,7 +156,6 @@ class ViewController: UIViewController {
         view.addSubview(debugButton)
         debugButton.centerX(inView: view)
         debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
-        debugButton.setDimensions(width: 150, height: 40)
     }
 
     private func configureActionButtonsUI() {
