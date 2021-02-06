@@ -11,8 +11,6 @@ import ARKit
 
 class BranchNode: SCNNode {
 
-    // MARK: - Properties
-
     // MARK: - Lifecycle
 
     init(from: SCNVector3, to: SCNVector3) {
@@ -32,7 +30,7 @@ class BranchNode: SCNNode {
                                 (y2 - y1) * (y2 - y1) +
                                 (z2 - z1) * (z2 - z1) )
 
-        let cylinder = SCNCylinder(radius: 0.001,
+        let cylinder = SCNCylinder(radius: 0.0025,
                                    height: CGFloat(distance))
         cylinder.firstMaterial?.diffuse.contents = UIColor.lifullSecondaryBrandColor
         geometry = cylinder
@@ -49,9 +47,4 @@ class BranchNode: SCNNode {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Selectors
-
-    // MARK: - Helpers
-
 }

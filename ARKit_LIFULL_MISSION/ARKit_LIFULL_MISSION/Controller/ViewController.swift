@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     enum MappingStatus {
         case notDetectedPlain
         case detectedPlain
-        case mapping
+        case addedDotNode
         case finishMapping
     }
 
@@ -256,9 +256,7 @@ class ViewController: UIViewController {
                 } completion: { _ in
                     self.statusLabel.isHidden = true
                 }
-            case .mapping:
-                break
-            case .finishMapping:
+            case .addedDotNode, .finishMapping:
                 break
             }
         }
