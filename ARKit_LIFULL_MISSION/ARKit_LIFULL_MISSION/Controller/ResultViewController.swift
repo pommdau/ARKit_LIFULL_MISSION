@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol ResultViewControllerDelegate: AnyObject {
+    func backToMappingView()
+}
+
 class ResultViewController: UIViewController {
 
     // MARK: - Properties
 
     private var dotCoordinates = [Coordinate]()
+    weak var delegate: ResultViewControllerDelegate?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -19,6 +24,7 @@ class ResultViewController: UIViewController {
         label.font = .boldSystemFont(ofSize: 20)
         label.text = "計測が完了しました！"
         label.textAlignment = .center
+        label.setDimensions(height: 40)
         return label
     }()
 
@@ -57,6 +63,11 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.backToMappingView()
     }
 
     // MARK: - Selectors

@@ -16,8 +16,6 @@ class MappingViewController: UIViewController {
     enum MappingStatus {
         case notDetectedPlain
         case detectedPlain
-        case addedDotNode
-        case finishMapping
     }
 
     // MARK: - Properties
@@ -28,18 +26,20 @@ class MappingViewController: UIViewController {
 
     private var branchNodes = [BranchNode]()
 
-    private lazy var sceneView: ARSCNView = {
-        let sceneView = ARSCNView()
-        return sceneView
-    }()
-
     private var mappingStatus = MappingStatus.notDetectedPlain {
         didSet {
             configureStatusLabel()
         }
     }
 
+    private var showingResultView = false
+
     // MARK: - UI Properties
+
+    private lazy var sceneView: ARSCNView = {
+        let sceneView = ARSCNView()
+        return sceneView
+    }()
 
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
@@ -53,16 +53,16 @@ class MappingViewController: UIViewController {
         return label
     }()
 
-    private lazy var undoButton: UIButton = {
-        let button = createActionButton(withSystemName: "arrow.uturn.backward")
-        button.addTarget(self, action: #selector(undoButtonTapped(_:)), for: .touchUpInside)
+    private lazy var trashButton: UIButton = {
+        let button = createActionButton(withSystemName: "trash.fill")
+        button.addTarget(self, action: #selector(trashButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()
 
-    private lazy var trashButton: UIButton = {
-        let button = createActionButton(withSystemName: "trash.fill")
-        button.addTarget(self, action: #selector(trashButtonTapped(_:)), for: .touchUpInside)
+    private lazy var undoButton: UIButton = {
+        let button = createActionButton(withSystemName: "arrow.uturn.backward")
+        button.addTarget(self, action: #selector(undoButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -95,18 +95,15 @@ class MappingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
 
-        // Run the view's session
         sceneView.session.run(configuration)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        // Pause the view's session
         sceneView.session.pause()
     }
 
@@ -116,7 +113,8 @@ class MappingViewController: UIViewController {
 
         // 適切なHitResultを取得する
         // タッチした2D座標 -> AR空間の3D座標
-        guard let touchLocation = touches.first?.location(in: sceneView) else {
+        guard let touchLocation = touches.first?.location(in: sceneView) ,
+              !showingResultView else {
             return
         }
 
@@ -158,7 +156,9 @@ class MappingViewController: UIViewController {
             // 結果画像を表示するビューの表示
             let coordinates = dotNodes.map { dotNode in dotNode.convertToCoordinate() }
             let controller = ResultViewController(withDotCoordinates: coordinates)
+            controller.delegate = self
             present(controller, animated: true) {
+                self.showingResultView = true
                 self.removeAllNodes()
             }
 
@@ -234,35 +234,35 @@ class MappingViewController: UIViewController {
         statusLabel.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
                            paddingTop: 0, paddingLeft: 0, paddingRight: 0)
 
-        let actionButtonStack = UIStackView(arrangedSubviews: [undoButton, trashButton])
+        let actionButtonStack = UIStackView(arrangedSubviews: [trashButton, undoButton])
         actionButtonStack.axis = .vertical
         actionButtonStack.spacing = 20
         actionButtonStack.distribution = .fillProportionally
         view.addSubview(actionButtonStack)
         actionButtonStack.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
-                                 paddingLeft: 40, paddingBottom: 40)
+                                 paddingLeft: 20, paddingBottom: 20)
 
         // DEBUG
-        view.addSubview(debugButton)
-        debugButton.centerX(inView: view)
-        debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+        //        view.addSubview(debugButton)
+        //        debugButton.centerX(inView: view)
+        //        debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
     }
 
     private func configureStatusLabel() {
         DispatchQueue.main.async {
             switch self.mappingStatus {
             case .notDetectedPlain:
-                self.statusLabel.text = "平面を検出中です…"
-                self.statusLabel.alpha = 1.0
                 self.statusLabel.isHidden = false
+                UIView.animate(withDuration: 0.5) {
+                    self.statusLabel.text = "平面を検出中です…"
+                    self.statusLabel.alpha = 1.0
+                }
             case .detectedPlain:
                 UIView.animate(withDuration: 0.5) {
                     self.statusLabel.alpha = 0
                 } completion: { _ in
                     self.statusLabel.isHidden = true
                 }
-            case .addedDotNode, .finishMapping:
-                break
             }
         }
     }
@@ -273,7 +273,7 @@ class MappingViewController: UIViewController {
         trashButton.isEnabled = existsNode
     }
 
-    // MARK: Handle Node Methods
+    // MARK: Node Methods
 
     private func undoAddingDotNode() {
         guard !dotNodes.isEmpty else {
@@ -344,5 +344,13 @@ extension MappingViewController: ARSCNViewDelegate {
         }
 
         planeNode.update(anchor: planeAnchor)
+    }
+}
+
+// MARK: - ARSCNViewDelegate Methods
+
+extension MappingViewController: ResultViewControllerDelegate {
+    func backToMappingView() {
+        showingResultView = false
     }
 }
