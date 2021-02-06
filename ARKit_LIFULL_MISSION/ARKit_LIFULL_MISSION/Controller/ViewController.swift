@@ -140,7 +140,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func debugButtonTapped(_ sender: UIButton) {
-        let controller = ResultViewController()
+        let controller = ResultViewController(withDotNodes: [])
         present(controller, animated: true, completion: nil)
     }
 

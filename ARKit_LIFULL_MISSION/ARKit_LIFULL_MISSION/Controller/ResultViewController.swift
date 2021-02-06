@@ -11,6 +11,8 @@ class ResultViewController: UIViewController {
 
     // MARK: - Properties
 
+    private var dotNodes = [DotNode]()
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -29,13 +31,19 @@ class ResultViewController: UIViewController {
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitle("新しく計測する", for: .normal)
         button.layer.cornerRadius = 5
-        button.setHeight(height: 40)
+        button.setDimensions(height: 40)
         button.addTarget(self, action: #selector(backToMappingButtonTapped), for: .touchUpInside)
 
         return button
     }()
 
     // MARK: - Lifecycle
+
+    convenience init(withDotNodes dotNodes: [DotNode]) {
+        self.init(nibName: nil, bundle: nil)
+
+        self.dotNodes = dotNodes
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +53,14 @@ class ResultViewController: UIViewController {
 
     // MARK: - Selectors
 
-    @objc func backToMappingButtonTapped() {
-        print("backToMappingButtonTapped: ")
+    @objc
+    func backToMappingButtonTapped() {
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Helpers
 
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .lifullBrandColor
 
         let resultStack = UIStackView(arrangedSubviews: [imageView, backToMappingButton])
@@ -63,18 +72,38 @@ class ResultViewController: UIViewController {
         resultStack.centerY(inView: view)
         resultStack.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 12, paddingRight: 12)
 
-        let resultImageView = ResultImageView(dotCoordinates: [
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        ])
-        resultImageView.frame.size = CGSize(width: 1024, height: 1024)
-
-        guard let image = resultImageView.convertToImage() else {
-            return
+        if let image = createImage(withDotNodes: dotNodes) {
+            imageView.image = image
         }
-        imageView.image = image
+    }
+
+    private func createImage(withDotNodes dotNodes: [DotNode]) -> UIImage? {
+
+        // DEBUG
+        if dotNodes.isEmpty {
+            let coordinates = [
+                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+                Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+            ]
+            let resultImageView = ResultImageView(dotCoordinates: coordinates)
+            resultImageView.frame.size = CGSize(width: 1024, height: 1024)
+            guard let image = resultImageView.convertToImage() else {
+                return nil
+            }
+
+            return image
+        }
+
+        let coordinates = dotNodes.map { dotNode in Coordinate(dotNode.position.x, dotNode.position.z) }
+        let resultImageView = ResultImageView(dotCoordinates: coordinates)
+        resultImageView.frame.size = CGSize(width: 1024, height: 1024)
+        guard let image = resultImageView.convertToImage() else {
+            return nil
+        }
+
+        return image
     }
 
 }
