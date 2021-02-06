@@ -113,7 +113,9 @@ class ViewController: UIViewController {
             // 結果画像を表示するビューの表示
             let coordinates = dotNodes.map { dotNode in dotNode.convertToCoordinate() }
             let controller = ResultViewController(withDotCoordinates: coordinates)
-            present(controller, animated: true, completion: nil)
+            present(controller, animated: true) {
+                self.removeAllNodes()
+            }
 
             return
         }
