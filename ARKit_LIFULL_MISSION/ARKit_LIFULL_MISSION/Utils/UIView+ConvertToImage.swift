@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func snapshotImage() -> UIImage? {
+    func convertToImage() -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
         guard let currentContext = UIGraphicsGetCurrentContext() else {
             UIGraphicsEndImageContext()

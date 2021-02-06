@@ -23,6 +23,14 @@ class ViewController: UIViewController {
 
     private var branchNodes = [BranchNode]()  // DotNode間に配置する線分オブジェクト
 
+    private lazy var debugButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .white
+        button.setTitle("debug button", for: .normal)
+        button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -33,6 +41,7 @@ class ViewController: UIViewController {
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
 
+        configureUI()
         configureActionButtonsUI()
     }
 
@@ -129,7 +138,19 @@ class ViewController: UIViewController {
         removeAllNodes()
     }
 
+    @IBAction private func debugButtonTapped(_ sender: UIButton) {
+        let controller = ResultViewController()
+        present(controller, animated: true, completion: nil)
+    }
+
     // MARK: - Helpers
+
+    private func configureUI() {
+        view.addSubview(debugButton)
+        debugButton.centerX(inView: view)
+        debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+        debugButton.setDimensions(width: 100, height: 40)
+    }
 
     private func configureActionButtonsUI() {
         let existsNode = !dotNodes.isEmpty
