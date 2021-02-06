@@ -109,12 +109,12 @@ class ViewController: UIViewController {
                                         to: endPosition)
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
-            
+
             // 結果画像を表示するビューの表示
             let coordinates = dotNodes.map { dotNode in dotNode.convertToCoordinate() }
             let controller = ResultViewController(withDotCoordinates: coordinates)
             present(controller, animated: true, completion: nil)
-            
+
             return
         }
 
@@ -213,7 +213,7 @@ class ViewController: UIViewController {
 
         return false
     }
-    
+
     private func calculateDistance(from startPoint: SCNVector3, to endPoint: SCNVector3) -> Float {
         let distance = sqrt(
             pow(startPoint.x - endPoint.x, 2) +

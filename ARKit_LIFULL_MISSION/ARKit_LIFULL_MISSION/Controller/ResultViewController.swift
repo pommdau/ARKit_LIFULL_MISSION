@@ -13,6 +13,15 @@ class ResultViewController: UIViewController {
 
     private var dotCoordinates = [Coordinate]()
 
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 20)
+        label.text = "計測が完了しました！"
+        label.textAlignment = .center
+        return label
+    }()
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -62,9 +71,9 @@ class ResultViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .lifullBrandColor
 
-        let resultStack = UIStackView(arrangedSubviews: [imageView, backToMappingButton])
+        let resultStack = UIStackView(arrangedSubviews: [titleLabel, imageView, backToMappingButton])
         resultStack.axis = .vertical
-        resultStack.spacing = 8
+        resultStack.spacing = 12
         resultStack.distribution = .fillProportionally
         view.addSubview(resultStack)
 
