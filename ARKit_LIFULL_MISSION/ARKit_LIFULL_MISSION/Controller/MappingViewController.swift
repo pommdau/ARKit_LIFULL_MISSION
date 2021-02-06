@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController {
+class MappingViewController: UIViewController {
 
     // MARK: - Definitions
 
@@ -325,7 +325,7 @@ class ViewController: UIViewController {
 
 // MARK: - ARSCNViewDelegate Methods
 
-extension ViewController: ARSCNViewDelegate {
+extension MappingViewController: ARSCNViewDelegate {
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
