@@ -11,6 +11,15 @@ import ARKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Definitions
+
+    enum MappingStatus {
+        case notDetectedPlain
+        case detectedPlain
+        case mapping
+        case finishMapping
+    }
+
     // MARK: - Properties
 
     private var dotNodes = [DotNode]() {
@@ -22,6 +31,26 @@ class ViewController: UIViewController {
     private lazy var sceneView: ARSCNView = {
         let sceneView = ARSCNView()
         return sceneView
+    }()
+
+    private var mappingStatus = MappingStatus.notDetectedPlain {
+        didSet {
+            configureStatusLabel()
+        }
+    }
+
+    // MARK: - UI Properties
+
+    private lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.backgroundColor = .init(white: 0.0, alpha: 0.5)
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textAlignment = .center
+        label.setDimensions(height: 60)
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 5
+        return label
     }()
 
     private lazy var undoButton: UIButton = {
@@ -58,8 +87,9 @@ class ViewController: UIViewController {
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
 
-        configureUI()
+        initializeUI()
         configureActionButtonsUI()
+        configureStatusLabel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +110,7 @@ class ViewController: UIViewController {
         sceneView.session.pause()
     }
 
-    // MARK: - Override Methods
+    // MARK: - Override
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
@@ -164,13 +194,19 @@ class ViewController: UIViewController {
 
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
-        let controller = ResultViewController(withDotCoordinates: [
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        ])
-        present(controller, animated: true, completion: nil)
+        if mappingStatus == .notDetectedPlain {
+            mappingStatus = .detectedPlain
+        } else {
+            mappingStatus = .notDetectedPlain
+        }
+
+        //        let controller = ResultViewController(withDotCoordinates: [
+        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+        //        ])
+        //        present(controller, animated: true, completion: nil)
     }
 
     // MARK: - Helpers
@@ -189,9 +225,14 @@ class ViewController: UIViewController {
         return button
     }
 
-    private func configureUI() {
+    private func initializeUI() {
         view.addSubview(sceneView)
         sceneView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: view.bottomAnchor)
+
+        view.addSubview(statusLabel)
+        statusLabel.centerX(inView: view)
+        statusLabel.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                           paddingTop: 0, paddingLeft: 0, paddingRight: 0)
 
         let buttonStack = UIStackView(arrangedSubviews: [undoButton, trashButton, debugButton])
         buttonStack.axis = .vertical
@@ -200,6 +241,27 @@ class ViewController: UIViewController {
         view.addSubview(buttonStack)
         buttonStack.centerX(inView: view)
         buttonStack.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+    }
+
+    private func configureStatusLabel() {
+        DispatchQueue.main.async {
+            switch self.mappingStatus {
+            case .notDetectedPlain:
+                self.statusLabel.text = "平面を検出中です…"
+                self.statusLabel.alpha = 1.0
+                self.statusLabel.isHidden = false
+            case .detectedPlain:
+                UIView.animate(withDuration: 0.5) {
+                    self.statusLabel.alpha = 0
+                } completion: { _ in
+                    self.statusLabel.isHidden = true
+                }
+            case .mapping:
+                break
+            case .finishMapping:
+                break
+            }
+        }
     }
 
     private func configureActionButtonsUI() {
@@ -265,6 +327,9 @@ extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
             return
+        }
+        if mappingStatus == .notDetectedPlain {
+            mappingStatus = .detectedPlain
         }
         node.addChildNode(PlaneNode(anchor: planeAnchor))
     }
