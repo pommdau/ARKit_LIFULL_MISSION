@@ -41,4 +41,8 @@ class DotNode: SCNNode {
 
     // MARK: - Helpers
 
+    func convertToCoordinate() -> Coordinate {
+        Coordinate(position.x, position.z)
+    }
+
 }

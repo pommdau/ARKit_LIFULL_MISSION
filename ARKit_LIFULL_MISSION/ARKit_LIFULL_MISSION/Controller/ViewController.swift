@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
 
-    private var branchNodes = [BranchNode]()  // DotNode間に配置する線分オブジェクト
+    private var branchNodes = [BranchNode]()
 
     private lazy var debugButton: UIButton = {
         let button = UIButton(type: .system)
@@ -109,9 +109,12 @@ class ViewController: UIViewController {
                                         to: endPosition)
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
-
-            showFinishMappingDialog()
-
+            
+            // 結果画像を表示するビューの表示
+            let coordinates = dotNodes.map { dotNode in dotNode.convertToCoordinate() }
+            let controller = ResultViewController(withDotCoordinates: coordinates)
+            present(controller, animated: true, completion: nil)
+            
             return
         }
 
@@ -210,24 +213,7 @@ class ViewController: UIViewController {
 
         return false
     }
-
-    private func showFinishMappingDialog() {
-        let alertController = UIAlertController(title: "計測が完了しました！", message: "", preferredStyle: .alert)
-
-        alertController.addAction(
-            UIAlertAction(title: "結果を見る",
-                          style: .default) { _ in
-                print("DEBUG: 結果を表示するダイアログへ遷移させる")
-            })
-
-        alertController.addAction(
-            UIAlertAction(title: "最初からやり直す",
-                          style: .destructive) { _ in
-                self.removeAllNodes()
-            })
-        self.present(alertController, animated: true, completion: nil)
-    }
-
+    
     private func calculateDistance(from startPoint: SCNVector3, to endPoint: SCNVector3) -> Float {
         let distance = sqrt(
             pow(startPoint.x - endPoint.x, 2) +
