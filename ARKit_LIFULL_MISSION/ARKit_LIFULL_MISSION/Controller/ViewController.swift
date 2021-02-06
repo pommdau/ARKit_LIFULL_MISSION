@@ -13,15 +13,30 @@ class ViewController: UIViewController {
 
     // MARK: - Properties
 
-    @IBOutlet private var sceneView: ARSCNView!
-    @IBOutlet private weak var undoButton: UIButton!
-    @IBOutlet private weak var trashButton: UIButton!
-
     private var dotNodes = [DotNode]() {
         didSet { configureActionButtonsUI() }
     }
 
     private var branchNodes = [BranchNode]()
+
+    private lazy var sceneView: ARSCNView = {
+        let sceneView = ARSCNView()
+        return sceneView
+    }()
+
+    private lazy var undoButton: UIButton = {
+        let button = createActionButton(withSystemName: "arrow.uturn.backward")
+        button.addTarget(self, action: #selector(undoButtonTapped(_:)), for: .touchUpInside)
+
+        return button
+    }()
+
+    private lazy var trashButton: UIButton = {
+        let button = createActionButton(withSystemName: "trash.fill")
+        button.addTarget(self, action: #selector(trashButtonTapped(_:)), for: .touchUpInside)
+
+        return button
+    }()
 
     private lazy var debugButton: UIButton = {
         let button = UIButton(type: .system)
@@ -137,15 +152,18 @@ class ViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func undoButtonTapped(_ sender: UIButton) {
+    @objc
+    private func undoButtonTapped(_ sender: UIButton) {
         undoAddingDotNode()
     }
 
-    @IBAction private func trashButtonTapped(_ sender: UIButton) {
+    @objc
+    private func trashButtonTapped(_ sender: UIButton) {
         removeAllNodes()
     }
 
-    @IBAction private func debugButtonTapped(_ sender: UIButton) {
+    @objc
+    private func debugButtonTapped(_ sender: UIButton) {
         let controller = ResultViewController(withDotCoordinates: [
             Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
             Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
@@ -158,9 +176,17 @@ class ViewController: UIViewController {
     // MARK: - Helpers
 
     private func configureUI() {
-        view.addSubview(debugButton)
-        debugButton.centerX(inView: view)
-        debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+
+        view.addSubview(sceneView)
+        sceneView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: view.bottomAnchor)
+
+        let buttonStack = UIStackView(arrangedSubviews: [undoButton, trashButton, debugButton])
+        buttonStack.axis = .vertical
+        buttonStack.spacing = 8
+        buttonStack.distribution = .fillProportionally
+        view.addSubview(buttonStack)
+        buttonStack.centerX(inView: view)
+        buttonStack.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
     }
 
     private func configureActionButtonsUI() {
@@ -224,6 +250,18 @@ class ViewController: UIViewController {
         )
 
         return distance
+    }
+
+    private func createActionButton(withSystemName systemName: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .init(white: 1.0, alpha: 0.8)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFit
+        button.setImage(UIImage(systemName: systemName), for: .normal)
+        button.layer.cornerRadius = 5
+        button.setDimensions(width: 100, height: 40)
+
+        return button
     }
 }
 
