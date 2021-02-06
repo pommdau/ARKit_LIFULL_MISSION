@@ -194,19 +194,19 @@ class ViewController: UIViewController {
 
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
-        if mappingStatus == .notDetectedPlain {
-            mappingStatus = .detectedPlain
-        } else {
-            mappingStatus = .notDetectedPlain
-        }
+        //        if mappingStatus == .notDetectedPlain {
+        //            mappingStatus = .detectedPlain
+        //        } else {
+        //            mappingStatus = .notDetectedPlain
+        //        }
 
-        //        let controller = ResultViewController(withDotCoordinates: [
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        //        ])
-        //        present(controller, animated: true, completion: nil)
+        let controller = ResultViewController(withDotCoordinates: [
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+        ])
+        present(controller, animated: true, completion: nil)
     }
 
     // MARK: - Helpers
@@ -234,13 +234,18 @@ class ViewController: UIViewController {
         statusLabel.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
                            paddingTop: 0, paddingLeft: 0, paddingRight: 0)
 
-        let buttonStack = UIStackView(arrangedSubviews: [undoButton, trashButton, debugButton])
-        buttonStack.axis = .vertical
-        buttonStack.spacing = 8
-        buttonStack.distribution = .fillProportionally
-        view.addSubview(buttonStack)
-        buttonStack.centerX(inView: view)
-        buttonStack.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+        let actionButtonStack = UIStackView(arrangedSubviews: [undoButton, trashButton])
+        actionButtonStack.axis = .vertical
+        actionButtonStack.spacing = 20
+        actionButtonStack.distribution = .fillProportionally
+        view.addSubview(actionButtonStack)
+        actionButtonStack.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
+                                 paddingLeft: 40, paddingBottom: 40)
+
+        // DEBUG
+        view.addSubview(debugButton)
+        debugButton.centerX(inView: view)
+        debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
     }
 
     private func configureStatusLabel() {
@@ -310,7 +315,7 @@ class ViewController: UIViewController {
             return false
         }
 
-        if SCNVector3.calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
+        if SCNVector3.calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.05 {  // 始点から5cm以内であればマッピングを終了とする
             return true
         }
 

@@ -67,7 +67,7 @@ class ResultImageView: UIView {
         path.fill()
         path.stroke()
 
-        for i in 0 ..< dotPercentages.count {
+        for i in dotPercentages.indices {
             let nextIndex = (i == dotPercentages.count - 1) ? 0 : i + 1
             let startPercentage = dotPercentages[i]
             let endPercentage   = dotPercentages[nextIndex]
