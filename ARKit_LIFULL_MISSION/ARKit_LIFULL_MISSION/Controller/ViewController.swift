@@ -21,7 +21,17 @@ class ViewController: UIViewController {
         didSet { configureActionButtonsUI() }
     }
 
-    private var branchNodes = [BranchNode]()  // DotNode間に配置する線分オブジェクト
+    private var branchNodes = [BranchNode]()
+
+    private lazy var debugButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .white
+        button.setTitle("Show Debug ResultView", for: .normal)
+        button.layer.cornerRadius = 5
+        button.setDimensions(width: 250, height: 40)
+        button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: - Lifecycle
 
@@ -33,6 +43,7 @@ class ViewController: UIViewController {
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
 
+        configureUI()
         configureActionButtonsUI()
     }
 
@@ -99,7 +110,10 @@ class ViewController: UIViewController {
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
 
-            showFinishMappingDialog()
+            // 結果画像を表示するビューの表示
+            let coordinates = dotNodes.map { dotNode in dotNode.convertToCoordinate() }
+            let controller = ResultViewController(withDotCoordinates: coordinates)
+            present(controller, animated: true, completion: nil)
 
             return
         }
@@ -129,7 +143,23 @@ class ViewController: UIViewController {
         removeAllNodes()
     }
 
+    @IBAction private func debugButtonTapped(_ sender: UIButton) {
+        let controller = ResultViewController(withDotCoordinates: [
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+        ])
+        present(controller, animated: true, completion: nil)
+    }
+
     // MARK: - Helpers
+
+    private func configureUI() {
+        view.addSubview(debugButton)
+        debugButton.centerX(inView: view)
+        debugButton.anchor(bottom: view.bottomAnchor, paddingBottom: 100)
+    }
 
     private func configureActionButtonsUI() {
         let existsNode = !dotNodes.isEmpty
@@ -182,23 +212,6 @@ class ViewController: UIViewController {
         }
 
         return false
-    }
-
-    private func showFinishMappingDialog() {
-        let alertController = UIAlertController(title: "計測が完了しました！", message: "", preferredStyle: .alert)
-
-        alertController.addAction(
-            UIAlertAction(title: "結果を見る",
-                          style: .default) { _ in
-                print("DEBUG: 結果を表示するダイアログへ遷移させる")
-            })
-
-        alertController.addAction(
-            UIAlertAction(title: "最初からやり直す",
-                          style: .destructive) { _ in
-                self.removeAllNodes()
-            })
-        self.present(alertController, animated: true, completion: nil)
     }
 
     private func calculateDistance(from startPoint: SCNVector3, to endPoint: SCNVector3) -> Float {
