@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD35514825CE5B1200556C0C /* ResultViewController.swift */; };
+		ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */; };
 		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
 		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
 		D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F2A25CAE0F10051376C /* ResultImageView.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		AD35514825CE5B1200556C0C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+CalculateDistance.swift"; sourceTree = "<group>"; };
 		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		D07D4F2A25CAE0F10051376C /* ResultImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultImageView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */,
 				D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */,
 				D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */,
+				ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */,
+				ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */,
 				D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */,
 				D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */,
 				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,

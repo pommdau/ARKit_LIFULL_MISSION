@@ -175,8 +175,21 @@ class ViewController: UIViewController {
 
     // MARK: - Helpers
 
-    private func configureUI() {
+    // MARK: Configure UI Methods
 
+    private func createActionButton(withSystemName systemName: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .init(white: 1.0, alpha: 0.8)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFit
+        button.setImage(UIImage(systemName: systemName), for: .normal)
+        button.layer.cornerRadius = 5
+        button.setDimensions(width: 100, height: 40)
+
+        return button
+    }
+
+    private func configureUI() {
         view.addSubview(sceneView)
         sceneView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: view.bottomAnchor)
 
@@ -194,6 +207,8 @@ class ViewController: UIViewController {
         undoButton.isEnabled = existsNode
         trashButton.isEnabled = existsNode
     }
+
+    // MARK: Handle Node Methods
 
     private func undoAddingDotNode() {
         guard !dotNodes.isEmpty else {
@@ -235,33 +250,11 @@ class ViewController: UIViewController {
             return false
         }
 
-        if calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
+        if SCNVector3.calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.03 {  // 始点から3cm以内であればマッピングを終了とする
             return true
         }
 
         return false
-    }
-
-    private func calculateDistance(from startPoint: SCNVector3, to endPoint: SCNVector3) -> Float {
-        let distance = sqrt(
-            pow(startPoint.x - endPoint.x, 2) +
-                pow(startPoint.y - endPoint.y, 2) +
-                pow(startPoint.z - endPoint.z, 2)
-        )
-
-        return distance
-    }
-
-    private func createActionButton(withSystemName systemName: String) -> UIButton {
-        let button = UIButton(type: .system)
-        button.backgroundColor = .init(white: 1.0, alpha: 0.8)
-        button.tintColor = .black
-        button.imageView?.contentMode = .scaleAspectFit
-        button.setImage(UIImage(systemName: systemName), for: .normal)
-        button.layer.cornerRadius = 5
-        button.setDimensions(width: 100, height: 40)
-
-        return button
     }
 }
 
