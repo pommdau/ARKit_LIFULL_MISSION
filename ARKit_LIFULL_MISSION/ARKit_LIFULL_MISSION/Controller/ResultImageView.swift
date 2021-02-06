@@ -36,7 +36,7 @@ class ResultImageView: UIView {
 
     init(dotCoordinates: [Coordinate]) {
         super.init(frame: .zero)
-        backgroundColor = .systemGray
+        backgroundColor = .white
 
         self.dotCoordinates = dotCoordinates
 

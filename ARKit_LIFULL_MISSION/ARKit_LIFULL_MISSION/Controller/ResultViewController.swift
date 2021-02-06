@@ -15,7 +15,7 @@ class ResultViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = .white
         imageView.layer.cornerRadius = 5
         imageView.setSizeAspect(widthRatio: 1.0, heightRatio: 1.0)
 
