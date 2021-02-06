@@ -37,7 +37,7 @@ class ResultViewController: UIViewController {
         view.backgroundColor = .lifullBrandColor
 
         view.addSubview(imageView)
-        view.setDimensions(width: 600, height: 600)
+        imageView.setDimensions(width: 600, height: 600)
         imageView.center(inView: view)
 
         let resultImageView = ResultImageView(dotCoordinates: [

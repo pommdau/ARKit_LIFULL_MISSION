@@ -17,7 +17,8 @@ extension ResultImageView {
 
         percentages.forEach { percentage in
             let coordinate = percentage.convertPercentToPoint(in: drawSize)
-            if percentages.first! == percentage {
+            if let firstPercentage = percentages.first,
+               firstPercentage == percentage {
                 path.move(to: CGPoint(x: CGFloat(coordinate.x), y: CGFloat(coordinate.y)))
             } else {
                 path.addLine(to: CGPoint(x: CGFloat(coordinate.x), y: CGFloat(coordinate.y)))
@@ -29,14 +30,13 @@ extension ResultImageView {
     }
 
     func createLabelBackgroundRect(title: String,
-                                   sytetmFontSize: CGFloat = 14,
                                    startPercentage: Coordinate,
                                    endPercentage: Coordinate,
                                    in drawSize: CGSize) -> UIBezierPath {
         let startPoint = startPercentage.convertPercentToPoint(in: drawSize)
         let endPoint = endPercentage.convertPercentToPoint(in: drawSize)
 
-        let labelSize = calculateLabelSize(title: title, sytetmFontSize: sytetmFontSize)
+        let labelSize = calculateLabelSize(title: title)
         let size = CGSize(width: labelSize.width + 10, height: labelSize.height + 3)  // 適当なマージンを加える
         let point = CGPoint(x: (startPoint.x + endPoint.x) / 2 - size.width / 2,
                             y: (startPoint.y + endPoint.y) / 2 - size.height / 2)
@@ -47,7 +47,6 @@ extension ResultImageView {
     }
 
     func calculateLabelPoint(title: String,
-                             sytetmFontSize: CGFloat = 14,
                              startPercentage: Coordinate,
                              endPercentage: Coordinate,
                              in drawSize: CGSize) -> CGPoint {
@@ -55,17 +54,17 @@ extension ResultImageView {
         let startPoint = startPercentage.convertPercentToPoint(in: drawSize)
         let endPoint = endPercentage.convertPercentToPoint(in: drawSize)
 
-        let size = calculateLabelSize(title: title, sytetmFontSize: sytetmFontSize)
+        let size = calculateLabelSize(title: title)
         let point = CGPoint(x: (startPoint.x + endPoint.x) / 2 - size.width / 2,
                             y: (startPoint.y + endPoint.y) / 2 - size.height / 2)
 
         return point
     }
 
-    private func calculateLabelSize(title: String, sytetmFontSize: CGFloat = 14) -> CGSize {
+    private func calculateLabelSize(title: String) -> CGSize {
         let label = UILabel()
         label.text = title
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: ResultImageView.distanceLabelFontSize)
         label.sizeToFit()
 
         return label.frame.size

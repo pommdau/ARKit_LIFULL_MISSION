@@ -23,6 +23,10 @@ import SceneKit
 
 class ResultImageView: UIView {
 
+    // MARK: - Static Properties
+
+    static let distanceLabelFontSize: CGFloat = 25
+
     // MARK: - Properties
 
     var dotCoordinates = [Coordinate]()  // 座標の実値(m) 座標間の距離の計算用
@@ -51,11 +55,11 @@ class ResultImageView: UIView {
 
         // ドットを結んで描画
         let path = createLines(to: dotPercentages, in: rect.size)
-        UIColor.red.setStroke()
-        path.lineWidth = 5
+        UIColor.lifullBrandColor.setStroke()
+        path.lineWidth = 3
 
         // [Subtle Tile Patterns Vol8](https://www.pixeden.com/graphic-web-backgrounds/subtle-tile-patterns-vol8)
-        if let floorImage = UIImage(named: "004-polished-wood") {
+        if let floorImage = UIImage(named: "wood") {
             UIColor(patternImage: floorImage).setFill()
         } else {
             UIColor.white.setFill()  // 通常は通らない
@@ -86,7 +90,7 @@ class ResultImageView: UIView {
 
             labelTitle.draw(at: labelPoint, withAttributes: [
                 NSAttributedString.Key.foregroundColor: UIColor.black,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: ResultImageView.distanceLabelFontSize)
             ])
         }
     }
