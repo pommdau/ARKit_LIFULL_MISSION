@@ -13,7 +13,7 @@ class DotNode: SCNNode {
 
     // MARK: - Lifecycle
 
-    init(hitResult: ARHitTestResult, color: UIColor = .lifullSecondaryBrandColor) {
+    init(position: SCNVector3, color: UIColor = .lifullSecondaryBrandColor) {
 
         super.init()
 
@@ -21,13 +21,8 @@ class DotNode: SCNNode {
         let material = SCNMaterial()
         material.diffuse.contents = color
         dotGeometry.materials = [material]
-        geometry = dotGeometry
-
-        position = SCNVector3(
-            x: hitResult.worldTransform.columns.3.x,
-            y: hitResult.worldTransform.columns.3.y,
-            z: hitResult.worldTransform.columns.3.z
-        )
+        self.geometry = dotGeometry
+        self.position = position
     }
 
     @available(*, unavailable)
