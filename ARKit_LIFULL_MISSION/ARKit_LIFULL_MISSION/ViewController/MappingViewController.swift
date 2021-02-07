@@ -145,7 +145,6 @@ class MappingViewController: UIViewController {
         }
 
         // タップされた位置にDotNodeを追加
-        // TODO: この辺のBranchNodeの処理はまとめられそう
         dotNodes.append(dotNode)
         sceneView.scene.rootNode.addChildNode(dotNode)
 
@@ -156,7 +155,6 @@ class MappingViewController: UIViewController {
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
         }
-
     }
 
     // MARK: - Actions
@@ -173,6 +171,8 @@ class MappingViewController: UIViewController {
 
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
+        /*
+        // 1. status labelのテスト用
         switch mappingStatus {
         case .notReady:
             mappingStatus = .notDetectedPlain
@@ -185,14 +185,16 @@ class MappingViewController: UIViewController {
         case .isShowingResultView:
             mappingStatus = .notReady
         }
-
-        //        let controller = ResultViewController(withDotCoordinates: [
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-        //            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        //        ])
-        //        present(controller, animated: true, completion: nil)
+        
+        // 2. 結果画面のテスト用
+        let controller = ResultViewController(withDotCoordinates: [
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+        ])
+        present(controller, animated: true, completion: nil)
+ */
     }
 
     // MARK: - Helpers

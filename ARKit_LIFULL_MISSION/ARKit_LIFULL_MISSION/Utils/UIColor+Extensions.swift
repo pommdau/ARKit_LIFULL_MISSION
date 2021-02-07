@@ -19,16 +19,10 @@ extension UIColor {
 
     static func random() -> UIColor {
         UIColor(
-            red: .random(),
-            green: .random(),
-            blue: .random(),
+            red: CGFloat.random(in: 0...1),
+            green: CGFloat.random(in: 0...1),
+            blue: CGFloat.random(in: 0...1),
             alpha: 1.0
         )
-    }
-}
-
-extension CGFloat {
-    static func random() -> CGFloat {
-        CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
 }
