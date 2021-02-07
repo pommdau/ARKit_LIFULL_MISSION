@@ -69,7 +69,6 @@ class MappingViewController: UIViewController {
         return button
     }()
 
-    // DEBUG
     private lazy var debugButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
@@ -213,7 +212,6 @@ class MappingViewController: UIViewController {
     private func initializeUI() {
 
         sceneView.delegate = self
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         sceneView.scene = SCNScene()
 
         // AutoLayout
@@ -233,21 +231,27 @@ class MappingViewController: UIViewController {
         actionButtonStack.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
                                  paddingLeft: 20, paddingBottom: 20)
 
-        // DEBUG
-        view.addSubview(debugButton)
-        debugButton.centerX(inView: view)
-        debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+        // DEBUG用の設定
+        if ProcessInfo.processInfo.environment["DEBUGGING"] == "1" {
+            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+
+            view.addSubview(debugButton)
+            debugButton.centerX(inView: view)
+            debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+        }
     }
 
     private func configureStatusLabel() {
         DispatchQueue.main.async {
             switch self.mappingStatus {
+
             case .notReady:
                 self.statusLabel.isHidden = false
                 UIView.animate(withDuration: 0.5) {
                     self.statusLabel.text = "計測の準備中です…"
                     self.statusLabel.alpha = 1.0
                 }
+
             case .notDetectedPlain:
                 self.statusLabel.text = "平面を検出中です…"
 
