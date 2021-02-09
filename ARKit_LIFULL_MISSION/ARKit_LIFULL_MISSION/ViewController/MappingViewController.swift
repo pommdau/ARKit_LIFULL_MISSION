@@ -11,9 +11,9 @@ import ARKit
 
 class MappingViewController: UIViewController {
 
-    // MARK: - Definitions
+    // MARK: - Enum
 
-    enum MappingStatus {
+    private enum MappingStatus {
         case notReady            // マッピングの準備がまだの状態
         case notDetectedPlain    // 平面がまだ検出されていない状態
         case detectedFirstPlain  // 初めて平面が検出された状態
@@ -24,7 +24,9 @@ class MappingViewController: UIViewController {
     // MARK: - Properties
 
     private var dotNodes = [DotNode]() {
-        didSet { configureActionButtonsUI() }
+        didSet {
+            configureActionButtonsUI()
+        }
     }
 
     private var branchNodes = [BranchNode]()
@@ -172,29 +174,29 @@ class MappingViewController: UIViewController {
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
         /*
-        // 1. status labelのテスト用
-        switch mappingStatus {
-        case .notReady:
-            mappingStatus = .notDetectedPlain
-        case .notDetectedPlain:
-            mappingStatus = .detectedFirstPlain
-        case .detectedFirstPlain:
-            mappingStatus = .detectedPlain
-        case .detectedPlain:
-            mappingStatus = .isShowingResultView
-        case .isShowingResultView:
-            mappingStatus = .notReady
-        }
-        
-        // 2. 結果画面のテスト用
-        let controller = ResultViewController(withDotCoordinates: [
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        ])
-        present(controller, animated: true, completion: nil)
- */
+         // 1. status labelのテスト用
+         switch mappingStatus {
+         case .notReady:
+         mappingStatus = .notDetectedPlain
+         case .notDetectedPlain:
+         mappingStatus = .detectedFirstPlain
+         case .detectedFirstPlain:
+         mappingStatus = .detectedPlain
+         case .detectedPlain:
+         mappingStatus = .isShowingResultView
+         case .isShowingResultView:
+         mappingStatus = .notReady
+         }
+
+         // 2. 結果画面のテスト用
+         let controller = ResultViewController(withDotCoordinates: [
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+         ])
+         present(controller, animated: true, completion: nil)
+         */
     }
 
     // MARK: - Helpers
