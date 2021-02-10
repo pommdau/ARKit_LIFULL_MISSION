@@ -59,6 +59,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ADF7D35B25CFC4B3001D6A1C /* ResultImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D07D4F2A25CAE0F10051376C /* ResultImageView.swift */,
+				D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */,
+				D07D4F3625CAE17F0051376C /* CoordinateManager.swift */,
+				D07D4F3025CAE1310051376C /* Coordinate.swift */,
+			);
+			path = ResultImageView;
+			sourceTree = "<group>";
+		};
 		D018DC1125BF30CD009D3CDC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,17 +91,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		D018DC1C25BF45CA009D3CDC /* Controller */ = {
+		D018DC1C25BF45CA009D3CDC /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				D0EB30BF25BDC22900F83325 /* MappingViewController.swift */,
 				AD35514825CE5B1200556C0C /* ResultViewController.swift */,
-				D07D4F2A25CAE0F10051376C /* ResultImageView.swift */,
-				D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */,
-				D07D4F3025CAE1310051376C /* Coordinate.swift */,
-				D07D4F3625CAE17F0051376C /* CoordinateManager.swift */,
 			);
-			path = Controller;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		D0EB30AF25BDC22900F83325 = {
@@ -112,12 +119,13 @@
 		D0EB30BA25BDC22900F83325 /* ARKit_LIFULL_MISSION */ = {
 			isa = PBXGroup;
 			children = (
+				D018DC1125BF30CD009D3CDC /* Utils */,
 				D018DC1B25BF45A1009D3CDC /* Model */,
-				D018DC1C25BF45CA009D3CDC /* Controller */,
+				D018DC1C25BF45CA009D3CDC /* ViewController */,
+				ADF7D35B25CFC4B3001D6A1C /* ResultImageView */,
 				D0EB30BB25BDC22900F83325 /* AppDelegate.swift */,
 				D0EB30BD25BDC22900F83325 /* art.scnassets */,
 				D0EB30C425BDC22C00F83325 /* Assets.xcassets */,
-				D018DC1125BF30CD009D3CDC /* Utils */,
 				D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */,
 				D0EB30C925BDC22C00F83325 /* Info.plist */,
 			);

@@ -11,28 +11,31 @@ import ARKit
 
 class MappingViewController: UIViewController {
 
-    // MARK: - Definitions
+    // MARK: - Enum
 
-    enum MappingStatus {
-        case notDetectedPlain
-        case detectedPlain
+    private enum MappingStatus {
+        case notReady            // マッピングの準備がまだの状態
+        case notDetectedPlain    // 平面がまだ検出されていない状態
+        case detectedFirstPlain  // 初めて平面が検出された状態
+        case detectedPlain       // 2つ以上の平面が検出された状態
+        case isShowingResultView // 結果ビューが表示中の状態
     }
 
     // MARK: - Properties
 
     private var dotNodes = [DotNode]() {
-        didSet { configureActionButtonsUI() }
+        didSet {
+            configureActionButtonsUI()
+        }
     }
 
     private var branchNodes = [BranchNode]()
 
-    private var mappingStatus = MappingStatus.notDetectedPlain {
+    private var mappingStatus = MappingStatus.notReady {
         didSet {
             configureStatusLabel()
         }
     }
-
-    private var showingResultView = false
 
     // MARK: - UI Properties
 
@@ -50,6 +53,7 @@ class MappingViewController: UIViewController {
         label.setDimensions(height: 60)
         label.clipsToBounds = true
         label.layer.cornerRadius = 5
+
         return label
     }()
 
@@ -74,6 +78,7 @@ class MappingViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.setDimensions(width: 250, height: 40)
         button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
+
         return button
     }()
 
@@ -82,14 +87,10 @@ class MappingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set the view's delegate
-        sceneView.delegate = self
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
-        sceneView.scene = SCNScene()
-
         initializeUI()
         configureActionButtonsUI()
         configureStatusLabel()
+        mappingStatus = .notDetectedPlain
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +100,14 @@ class MappingViewController: UIViewController {
         configuration.planeDetection = .horizontal
 
         sceneView.session.run(configuration)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if mappingStatus == .notReady {
+            mappingStatus = .notDetectedPlain
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,43 +120,15 @@ class MappingViewController: UIViewController {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-        // 適切なHitResultを取得する
-        // タッチした2D座標 -> AR空間の3D座標
-        guard let touchLocation = touches.first?.location(in: sceneView) ,
-              !showingResultView else {
+        guard let dotNode = createDotNode(withTouches: touches) else {
             return
         }
-
-        let hitResults = dotNodes.isEmpty ?
-            sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent) :
-            sceneView.hitTest(touchLocation, types: .existingPlane)
-
-        // hitResultsはカメラから近い順にソートされている
-        guard let firstHitResult = hitResults.first else {
-            return
-        }
-        var suitableHitResult = firstHitResult
-
-        // ドットがすでに1つ以上追加されている場合、最初のDotNodeに最もy座標が近い平面の結果を採用する
-        if let startDotNode = dotNodes.first {
-            var minYDifference = Float.greatestFiniteMagnitude
-            hitResults.forEach { hitResult in
-                let yDifference = abs(startDotNode.position.y - hitResult.worldTransform.columns.3.y)
-                if yDifference < minYDifference {
-                    minYDifference = yDifference
-                    suitableHitResult = hitResult
-                }
-            }
-        }
-
-        let dotNode = dotNodes.isEmpty ?
-            DotNode(hitResult: suitableHitResult, color: .lifullBrandColor) :
-            DotNode(hitResult: suitableHitResult)
 
         // 計測完了かどうかを確認する
-        if needsFinishMapping(withDotNode: dotNode),
+        if needsFinishMapping(withAddedDotNode: dotNode),
            let startPosition = dotNodes.last?.position,
            let endPosition = dotNodes.first?.position {
+
             let branchNode = BranchNode(from: startPosition,
                                         to: endPosition)
             branchNodes.append(branchNode)
@@ -158,7 +139,7 @@ class MappingViewController: UIViewController {
             let controller = ResultViewController(withDotCoordinates: coordinates)
             controller.delegate = self
             present(controller, animated: true) {
-                self.showingResultView = true
+                self.mappingStatus = .isShowingResultView
                 self.removeAllNodes()
             }
 
@@ -166,7 +147,6 @@ class MappingViewController: UIViewController {
         }
 
         // タップされた位置にDotNodeを追加
-        // TODO: この辺のBranchNodeの処理はまとめられそう
         dotNodes.append(dotNode)
         sceneView.scene.rootNode.addChildNode(dotNode)
 
@@ -177,7 +157,6 @@ class MappingViewController: UIViewController {
             branchNodes.append(branchNode)
             sceneView.scene.rootNode.addChildNode(branchNode)
         }
-
     }
 
     // MARK: - Actions
@@ -194,24 +173,33 @@ class MappingViewController: UIViewController {
 
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
-        //        if mappingStatus == .notDetectedPlain {
-        //            mappingStatus = .detectedPlain
-        //        } else {
-        //            mappingStatus = .notDetectedPlain
-        //        }
+        /*
+         // 1. status labelのテスト用
+         switch mappingStatus {
+         case .notReady:
+         mappingStatus = .notDetectedPlain
+         case .notDetectedPlain:
+         mappingStatus = .detectedFirstPlain
+         case .detectedFirstPlain:
+         mappingStatus = .detectedPlain
+         case .detectedPlain:
+         mappingStatus = .isShowingResultView
+         case .isShowingResultView:
+         mappingStatus = .notReady
+         }
 
-        let controller = ResultViewController(withDotCoordinates: [
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-            Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-        ])
-        present(controller, animated: true, completion: nil)
+         // 2. 結果画面のテスト用
+         let controller = ResultViewController(withDotCoordinates: [
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
+         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
+         ])
+         present(controller, animated: true, completion: nil)
+         */
     }
 
     // MARK: - Helpers
-
-    // MARK: Configure UI Methods
 
     private func createActionButton(withSystemName systemName: String) -> UIButton {
         let button = UIButton(type: .system)
@@ -226,6 +214,11 @@ class MappingViewController: UIViewController {
     }
 
     private func initializeUI() {
+
+        sceneView.delegate = self
+        sceneView.scene = SCNScene()
+
+        // AutoLayout
         view.addSubview(sceneView)
         sceneView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: view.bottomAnchor)
 
@@ -242,27 +235,42 @@ class MappingViewController: UIViewController {
         actionButtonStack.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
                                  paddingLeft: 20, paddingBottom: 20)
 
-        // DEBUG
-        //        view.addSubview(debugButton)
-        //        debugButton.centerX(inView: view)
-        //        debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+        // DEBUG用の設定
+        if ProcessInfo.processInfo.environment["DEBUGGING"] == "1" {
+            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+
+            view.addSubview(debugButton)
+            debugButton.centerX(inView: view)
+            debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+        }
     }
 
     private func configureStatusLabel() {
         DispatchQueue.main.async {
             switch self.mappingStatus {
-            case .notDetectedPlain:
+
+            case .notReady:
                 self.statusLabel.isHidden = false
                 UIView.animate(withDuration: 0.5) {
-                    self.statusLabel.text = "平面を検出中です…"
+                    self.statusLabel.text = "計測の準備中です…"
                     self.statusLabel.alpha = 1.0
                 }
+
+            case .notDetectedPlain:
+                self.statusLabel.text = "平面を検出中です…"
+
+            case .detectedFirstPlain:
+                self.statusLabel.text = "平面が検出されました！"
+
             case .detectedPlain:
                 UIView.animate(withDuration: 0.5) {
                     self.statusLabel.alpha = 0
                 } completion: { _ in
                     self.statusLabel.isHidden = true
                 }
+
+            case .isShowingResultView:
+                break
             }
         }
     }
@@ -272,21 +280,70 @@ class MappingViewController: UIViewController {
         undoButton.isEnabled = existsNode
         trashButton.isEnabled = existsNode
     }
+}
 
-    // MARK: Node Methods
+// MARK: - Node Handling Methods
+
+extension MappingViewController {
+
+    private func createDotNode(withTouches touches: Set<UITouch>) -> DotNode? {
+
+        // タッチされた2D座標 -> AR空間の3D座標
+        // また結果ビューの表示中はDotNodeを追加しない
+        guard let touchLocation = touches.first?.location(in: sceneView) ,
+              mappingStatus != MappingStatus.isShowingResultView else {
+            return nil
+        }
+
+        // 最初のDotNodeは検出面のみが対象
+        // 2つめ以降は検出面を無限に延長した面を対象とする
+        let hitResults = dotNodes.isEmpty ?
+            sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent) :
+            sceneView.hitTest(touchLocation, types: .existingPlane)
+
+        // hitResultsはカメラから近い順にソートされている
+        guard var suitableHitResult = hitResults.first else {
+            return nil
+        }
+
+        // 初めてのDotNodeの追加の場合、カメラから近い平面のHitResultを採用する
+        // 2つ目以降のDotNodeの追加の場合、最初のDotNodeに対して最もy座標が近い平面のHitResultの結果を採用する
+        if let startDotNode = dotNodes.first {
+            var minYDifference = Float.greatestFiniteMagnitude
+
+            hitResults.forEach { hitResult in
+                let yDifference = abs(startDotNode.position.y - hitResult.worldTransform.columns.3.y)
+                if yDifference < minYDifference {
+                    minYDifference = yDifference
+                    suitableHitResult = hitResult
+                }
+            }
+        }
+
+        let position = SCNVector3(
+            x: suitableHitResult.worldTransform.columns.3.x,
+            y: suitableHitResult.worldTransform.columns.3.y,
+            z: suitableHitResult.worldTransform.columns.3.z
+        )
+        let dotNode = dotNodes.isEmpty ?
+            DotNode(position: position, color: .lifullBrandColor) :
+            DotNode(position: position)
+
+        return dotNode
+    }
 
     private func undoAddingDotNode() {
         guard !dotNodes.isEmpty else {
             return
         }
 
-        // 直前のBranchNodeを削除
+        // DotNodeが2つ以上ある場合に、最新のBranchNodeを削除
         if dotNodes.count >= 2 {
             branchNodes.last?.removeFromParentNode()
             branchNodes.removeLast()
         }
 
-        // 直前のDotNodeを削除
+        // 最新のDotNodeを削除
         dotNodes.last?.removeFromParentNode()
         dotNodes.removeLast()
     }
@@ -296,30 +353,22 @@ class MappingViewController: UIViewController {
             return
         }
 
-        for dotNode in dotNodes {
-            dotNode.removeFromParentNode()
-        }
+        dotNodes.forEach { dotNode in dotNode.removeFromParentNode() }
         dotNodes.removeAll()
-
-        for branchNode in branchNodes {
-            branchNode.removeFromParentNode()
-        }
+        branchNodes.forEach { branchNode in branchNode.removeFromParentNode() }
         branchNodes.removeAll()
     }
 
-    private func needsFinishMapping(withDotNode newDotNode: DotNode) -> Bool {
+    private func needsFinishMapping(withAddedDotNode addedDotNode: DotNode) -> Bool {
 
         // マッピングは点が3つ以上でないと終了させない
         guard dotNodes.count >= 2 ,
-              let startingDotNode = dotNodes.first else {
+              let firstDotNode = dotNodes.first else {
             return false
         }
 
-        if SCNVector3.calculateDistance(from: newDotNode.position, to: startingDotNode.position) <= 0.05 {  // 始点から5cm以内であればマッピングを終了とする
-            return true
-        }
-
-        return false
+        // 始点から5cm以内であればマッピングを終了とする
+        return SCNVector3.calculateDistance(from: addedDotNode.position, to: firstDotNode.position) <= 0.05
     }
 }
 
@@ -331,9 +380,16 @@ extension MappingViewController: ARSCNViewDelegate {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
             return
         }
-        if mappingStatus == .notDetectedPlain {
+
+        switch mappingStatus {
+        case .notDetectedPlain:
+            mappingStatus = .detectedFirstPlain
+        case .detectedFirstPlain:
             mappingStatus = .detectedPlain
+        default:
+            break
         }
+
         node.addChildNode(PlaneNode(anchor: planeAnchor))
     }
 
@@ -350,7 +406,7 @@ extension MappingViewController: ARSCNViewDelegate {
 // MARK: - ARSCNViewDelegate Methods
 
 extension MappingViewController: ResultViewControllerDelegate {
-    func backToMappingView() {
-        showingResultView = false
+    func resultViewControllerDidDissappear(_ resultViewController: ResultViewController) {
+        mappingStatus = .detectedPlain
     }
 }

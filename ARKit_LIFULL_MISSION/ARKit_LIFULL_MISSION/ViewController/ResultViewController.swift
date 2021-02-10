@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ResultViewControllerDelegate: AnyObject {
-    func backToMappingView()
+    func resultViewControllerDidDissappear(_ resultViewController: ResultViewController)
 }
 
 class ResultViewController: UIViewController {
@@ -67,7 +67,7 @@ class ResultViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        delegate?.backToMappingView()
+        delegate?.resultViewControllerDidDissappear(self)
     }
 
     // MARK: - Selectors
