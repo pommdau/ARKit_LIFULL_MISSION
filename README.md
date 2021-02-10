@@ -69,8 +69,9 @@ func convertToCoordinate() -> Coordinate {
 }
 ```
 
-## 概要
-- `UIView`のカスタムクラスを作成し、サイズを指定してこれを`UIImage`に変換する流れ
+## 画像作成の流れ
+- `UIView`のカスタムクラスを作成しそこで描画を行う。
+- 最後にサイズを指定して`UIView`を`UIImage`に変換する流れ
 
 ```swift
 let resultImageView = ResultImageView(dotCoordinates: dotCoordinates)
@@ -79,6 +80,10 @@ guard let image = resultImageView.convertToImage() else {
     return nil
 }
 ```
+
+## 座標の変換
+### 回転
+
 
 
 # その他得られた知見
