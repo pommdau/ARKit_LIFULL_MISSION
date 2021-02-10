@@ -117,24 +117,46 @@ extension SCNVector3 {
 - 色々指摘してもらえるので、まず入れておくと間違いないなと感じた。(私はSwiftLint先生と呼んでいる)
 - ルール定義の`.yml`ファイルはリモートに置いて使い回せるのが便利。
 
-# デバッグ設定の切り替え
+## デバッグ設定の分離
+- Releaseのときファイルをコンパイルしないように設定と`#ifdef DEBUG`により、デバッグ部分が誤ってリリースされないようにしておく。
+	- [iOSで開発向け機能の実装する時に使うテクニック](https://qiita.com/t_osawa_009/items/6080037f20acdec1b239)
+- 以下の通りReleaseで- `*+Debug.swift`のファイルを無視するように設定する
 
-- デバッグ用にボタンを表示したかったので以下の通り設定
-	- [特定のSchemeのときにのみ、プログラムを実行させる（Xcode, Swift）](htt-ps://zenn.dev/ikeh1024/articles/9921957ca6e041920aec)
-- デバッグ用のSchemeを作成し環境変数を設定する
+<img width="512" alt="image" src="https://i.imgur.com/fJeg6aG.png">
 
-![image](https://i.imgur.com/ql4sp0d.png)
+- 上記の命名規則に則り`MappingViewController+Debug.swift`にデバッグ用のメソッドを書く。
 
 ```swift
-// DEBUG用の設定
-if ProcessInfo.processInfo.environment["DEBUGGING"] == "1" {
-    sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+extension MappingViewController {
+    // status labelのテスト用
+    func getNextMappintStatus(mappingStatus: MappingStatus) -> MappingStatus {
+		// ry
+    }
 
-    view.addSubview(debugButton)
-    debugButton.centerX(inView: view)
-    debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+    // 結果画面のテスト用
+    func presentDebugResultView() {
+       // ry      
+    }
 }
 ```
+
+- 本体のコードには`#ifdef DEBUG`でリリース時にコンパイルされないようにしておく
+
+```swift
+    #if DEBUG
+    private lazy var debugButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .white
+        button.setTitle("Show Debug ResultView", for: .normal)
+        button.layer.cornerRadius = 5
+        button.setDimensions(width: 250, height: 40)
+        button.addTarget(self, action: #selector(debugButtonTapped(_:)), for: .touchUpInside)
+
+        return button
+    }()
+    #endif
+```
+
 
 # 参考
 - [詳細! Swift 4 iPhoneアプリ開発 入門ノート Swift 4](www.amazon.co.jp/dp/4800711843)

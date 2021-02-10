@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD35514825CE5B1200556C0C /* ResultViewController.swift */; };
+		AD59E52225D41DD50091E8CF /* MappingViewController+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */; };
 		ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */; };
 		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
 		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		AD35514825CE5B1200556C0C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MappingViewController+Debug.swift"; sourceTree = "<group>"; };
 		ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+CalculateDistance.swift"; sourceTree = "<group>"; };
 		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				D0EB30BF25BDC22900F83325 /* MappingViewController.swift */,
+				AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */,
 				AD35514825CE5B1200556C0C /* ResultViewController.swift */,
 			);
 			path = ViewController;
@@ -228,6 +231,7 @@
 				D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */,
 				D0EB30C025BDC22900F83325 /* MappingViewController.swift in Sources */,
 				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,
+				AD59E52225D41DD50091E8CF /* MappingViewController+Debug.swift in Sources */,
 				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
 				D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */,
@@ -378,6 +382,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BWMJMJK727;
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -399,6 +404,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BWMJMJK727;
+				EXCLUDED_SOURCE_FILE_NAMES = "*+Debug.swift";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
