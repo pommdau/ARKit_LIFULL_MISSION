@@ -11,20 +11,20 @@
 >オブジェクトの各座標から距離を算出して、二次元状にプロットして位置関係を計算する
 >画像に書き出す
 
-- 求める成果物のイメージは下記と思われる
+- 求める成果物のイメージ
 	- [LIFULL HOME’S iPhoneアプリがiOS11新機能「ARkit」に対応](https://lifull.com/news/10468/)
 
 # ScreenShots
 
- 計測画面
+## 計測画面
 
 <img width="512" alt="image" src="https://imgur.com/Fc77I2D.png">
 
-- 計測範囲の設定
+## 計測範囲の設定
 
 <img width="512" alt="image" src="https://imgur.com/59xhlq7.png">
 
-- 計測結果画面
+## 計測結果画面
 
 <img width="512" alt="image" src="https://imgur.com/aBiP6VD.png">
 
@@ -82,7 +82,13 @@ guard let image = resultImageView.convertToImage() else {
 ```
 
 ## 座標の変換
-### 回転
+
+### 1. 座標の変換
+- [Working with Matrices ](https://developer.apple.com/documentation/accelerate/working_with_matrices)
+
+<img width="512" alt="image" src="https://imgur.com/qSYawgo.jpg">
+
+<img width="512" alt="image" src="https://imgur.com/QMSZ4Bu.jpg">
 
 
 
@@ -112,9 +118,10 @@ extension SCNVector3 {
 - ルール定義の`.yml`ファイルはリモートに置いて使い回せるのが便利。
 
 # デバッグ設定の切り替え
-- デバッグ用にボタンを表示したかったので以下の通り設定。
-- デバッグ用のSchemeを作成し環境変数を設定する
+
+- デバッグ用にボタンを表示したかったので以下の通り設定
 	- [特定のSchemeのときにのみ、プログラムを実行させる（Xcode, Swift）](htt-ps://zenn.dev/ikeh1024/articles/9921957ca6e041920aec)
+- デバッグ用のSchemeを作成し環境変数を設定する
 
 ![image](https://i.imgur.com/ql4sp0d.png)
 
@@ -128,7 +135,6 @@ if ProcessInfo.processInfo.environment["DEBUGGING"] == "1" {
     debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
 }
 ```
-
 
 # 参考
 - [詳細! Swift 4 iPhoneアプリ開発 入門ノート Swift 4](www.amazon.co.jp/dp/4800711843)
