@@ -7,29 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD35514825CE5B1200556C0C /* ResultViewController.swift */; };
+		ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */; };
 		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
 		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
+		D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F2A25CAE0F10051376C /* ResultImageView.swift */; };
+		D07D4F2E25CAE1170051376C /* ResultImageView+Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */; };
+		D07D4F3125CAE1310051376C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3025CAE1310051376C /* Coordinate.swift */; };
+		D07D4F3425CAE1560051376C /* UIView+ConvertToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */; };
+		D07D4F3725CAE17F0051376C /* CoordinateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D4F3625CAE17F0051376C /* CoordinateManager.swift */; };
 		D08DAED625BF61F80014D1A8 /* BranchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08DAED525BF61F80014D1A8 /* BranchNode.swift */; };
 		D0CF294925BF13C4002347EA /* DotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF294825BF13C4002347EA /* DotNode.swift */; };
 		D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BB25BDC22900F83325 /* AppDelegate.swift */; };
 		D0EB30BE25BDC22900F83325 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D0EB30BD25BDC22900F83325 /* art.scnassets */; };
-		D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BF25BDC22900F83325 /* ViewController.swift */; };
-		D0EB30C325BDC22900F83325 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0EB30C125BDC22900F83325 /* Main.storyboard */; };
+		D0EB30C025BDC22900F83325 /* MappingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30BF25BDC22900F83325 /* MappingViewController.swift */; };
 		D0EB30C525BDC22C00F83325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0EB30C425BDC22C00F83325 /* Assets.xcassets */; };
 		D0EB30C825BDC22C00F83325 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */; };
 		D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30D225BDCA5B00F83325 /* PlaneNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD35514825CE5B1200556C0C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+CalculateDistance.swift"; sourceTree = "<group>"; };
 		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
+		D07D4F2A25CAE0F10051376C /* ResultImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultImageView.swift; sourceTree = "<group>"; };
+		D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultImageView+Drawing.swift"; sourceTree = "<group>"; };
+		D07D4F3025CAE1310051376C /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConvertToImage.swift"; sourceTree = "<group>"; };
+		D07D4F3625CAE17F0051376C /* CoordinateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateManager.swift; sourceTree = "<group>"; };
 		D08DAED525BF61F80014D1A8 /* BranchNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchNode.swift; sourceTree = "<group>"; };
 		D0CF294825BF13C4002347EA /* DotNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotNode.swift; sourceTree = "<group>"; };
 		D0EB30B825BDC22900F83325 /* ARKit_LIFULL_MISSION.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_LIFULL_MISSION.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EB30BB25BDC22900F83325 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0EB30BD25BDC22900F83325 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		D0EB30BF25BDC22900F83325 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D0EB30C225BDC22900F83325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D0EB30BF25BDC22900F83325 /* MappingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingViewController.swift; sourceTree = "<group>"; };
 		D0EB30C425BDC22C00F83325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0EB30C725BDC22C00F83325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0EB30C925BDC22C00F83325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,11 +59,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ADF7D35B25CFC4B3001D6A1C /* ResultImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D07D4F2A25CAE0F10051376C /* ResultImageView.swift */,
+				D07D4F2D25CAE1170051376C /* ResultImageView+Drawing.swift */,
+				D07D4F3625CAE17F0051376C /* CoordinateManager.swift */,
+				D07D4F3025CAE1310051376C /* Coordinate.swift */,
+			);
+			path = ResultImageView;
+			sourceTree = "<group>";
+		};
 		D018DC1125BF30CD009D3CDC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */,
 				D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */,
+				D07D4F3325CAE1560051376C /* UIView+ConvertToImage.swift */,
+				ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -66,12 +91,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		D018DC1C25BF45CA009D3CDC /* Controller */ = {
+		D018DC1C25BF45CA009D3CDC /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D0EB30BF25BDC22900F83325 /* ViewController.swift */,
+				D0EB30BF25BDC22900F83325 /* MappingViewController.swift */,
+				AD35514825CE5B1200556C0C /* ResultViewController.swift */,
 			);
-			path = Controller;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		D0EB30AF25BDC22900F83325 = {
@@ -93,13 +119,13 @@
 		D0EB30BA25BDC22900F83325 /* ARKit_LIFULL_MISSION */ = {
 			isa = PBXGroup;
 			children = (
+				D018DC1125BF30CD009D3CDC /* Utils */,
 				D018DC1B25BF45A1009D3CDC /* Model */,
-				D018DC1C25BF45CA009D3CDC /* Controller */,
+				D018DC1C25BF45CA009D3CDC /* ViewController */,
+				ADF7D35B25CFC4B3001D6A1C /* ResultImageView */,
 				D0EB30BB25BDC22900F83325 /* AppDelegate.swift */,
-				D0EB30C125BDC22900F83325 /* Main.storyboard */,
 				D0EB30BD25BDC22900F83325 /* art.scnassets */,
 				D0EB30C425BDC22C00F83325 /* Assets.xcassets */,
-				D018DC1125BF30CD009D3CDC /* Utils */,
 				D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */,
 				D0EB30C925BDC22C00F83325 /* Info.plist */,
 			);
@@ -116,6 +142,7 @@
 				D0EB30B425BDC22900F83325 /* Sources */,
 				D0EB30B525BDC22900F83325 /* Frameworks */,
 				D0EB30B625BDC22900F83325 /* Resources */,
+				D01D23CD25C454CE00D0570D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -166,38 +193,56 @@
 				D0EB30BE25BDC22900F83325 /* art.scnassets in Resources */,
 				D0EB30C825BDC22C00F83325 /* LaunchScreen.storyboard in Resources */,
 				D0EB30C525BDC22C00F83325 /* Assets.xcassets in Resources */,
-				D0EB30C325BDC22900F83325 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D01D23CD25C454CE00D0570D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect --format\n  swiftlint\nelse\n  echo \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D0EB30B425BDC22900F83325 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */,
+				ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */,
 				D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */,
-				D0EB30C025BDC22900F83325 /* ViewController.swift in Sources */,
+				D0EB30C025BDC22900F83325 /* MappingViewController.swift in Sources */,
 				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,
 				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
+				D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */,
 				D0EB30BC25BDC22900F83325 /* AppDelegate.swift in Sources */,
 				D08DAED625BF61F80014D1A8 /* BranchNode.swift in Sources */,
+				D07D4F2E25CAE1170051376C /* ResultImageView+Drawing.swift in Sources */,
+				D07D4F3725CAE17F0051376C /* CoordinateManager.swift in Sources */,
+				D07D4F3125CAE1310051376C /* Coordinate.swift in Sources */,
+				D07D4F3425CAE1560051376C /* UIView+ConvertToImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D0EB30C125BDC22900F83325 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0EB30C225BDC22900F83325 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -330,8 +375,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 634C8XNAX7;
+				DEVELOPMENT_TEAM = BWMJMJK727;
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -339,6 +385,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail.ikeh1024.ARKit-LIFULL-MISSION";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -349,8 +396,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 634C8XNAX7;
+				DEVELOPMENT_TEAM = BWMJMJK727;
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -358,6 +406,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail.ikeh1024.ARKit-LIFULL-MISSION";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

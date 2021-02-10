@@ -1,0 +1,16 @@
+# リモートに置かれた.ymlファイルの設定を使用する
+parent_config: https://raw.githubusercontent.com/pommdau/SwiftLint-Config/v1.0.1/ikeh1024-base-swiftlint-config.yml
+
+# 対象のファイル・フォルダ
+included:
+# デフォルトからフォルダ名を変更していない場合、プロジェクト名と同名のフォルダを指定すればいい
+  - ARKit_LIFULL_MISSION
+
+
+# 対象外のファイル・フォルダ
+# R.swiftやMockoloなどで自動生成したファイルをまとめて1つのフォルダ(例：「Generated」フォルダ)に格納すると、フォルダを指定するだけで静的解析の対象外にできるのでオススメです。
+# [Swiftの静的解析ツール「SwiftLint」のセットアップ方法 \- Qiita](https://qiita.com/uhooi/items/bf888b53b4b8210108aa#%E6%B3%A8%E6%84%8F)
+excluded:
+  - Pods
+  - Generated
+
