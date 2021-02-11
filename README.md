@@ -16,7 +16,7 @@
 
 # GibHub
 
-TODO: URL
+https://github.com/pommdau/ARKit_LIFULL_MISSION
 
 # スクリーンショット
 
@@ -234,3 +234,5 @@ class ARKit_LIFULL_MISSIONTests: XCTestCase {
     - 描画や座標の扱いに関して主に参考にした。
 - Swift実践入門
     - 諸々の文法等で参考にした。
+- [UIViewからUIImageを生成する](https://qiita.com/k-yamada-github/items/f0a90a6e91f38bd6d9b9)<br>[【iOS】UIViewをUIImageに変換する \- Iganinのブログ](https://iganin.hatenablog.com/entry/2020/05/11/070950)
+    - `UIView`から`UIImage`への変換
