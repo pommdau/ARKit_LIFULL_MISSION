@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ADAC01DB25D511FC00E79731"
+               BuildableName = "ARKit_LIFULL_MISSIONTests.xctest"
+               BlueprintName = "ARKit_LIFULL_MISSIONTests"
+               ReferencedContainer = "container:ARKit_LIFULL_MISSION.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

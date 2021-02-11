@@ -13,7 +13,7 @@ class MappingViewController: UIViewController {
 
     // MARK: - Enum
 
-    private enum MappingStatus {
+    enum MappingStatus {
         case notReady            // マッピングの準備がまだの状態
         case notDetectedPlain    // 平面がまだ検出されていない状態
         case detectedFirstPlain  // 初めて平面が検出された状態
@@ -71,6 +71,7 @@ class MappingViewController: UIViewController {
         return button
     }()
 
+    #if DEBUG
     private lazy var debugButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
@@ -81,6 +82,7 @@ class MappingViewController: UIViewController {
 
         return button
     }()
+    #endif
 
     // MARK: - Lifecycle
 
@@ -171,33 +173,13 @@ class MappingViewController: UIViewController {
         removeAllNodes()
     }
 
+    #if DEBUG
     @objc
     private func debugButtonTapped(_ sender: UIButton) {
-        /*
-         // 1. status labelのテスト用
-         switch mappingStatus {
-         case .notReady:
-         mappingStatus = .notDetectedPlain
-         case .notDetectedPlain:
-         mappingStatus = .detectedFirstPlain
-         case .detectedFirstPlain:
-         mappingStatus = .detectedPlain
-         case .detectedPlain:
-         mappingStatus = .isShowingResultView
-         case .isShowingResultView:
-         mappingStatus = .notReady
-         }
-
-         // 2. 結果画面のテスト用
-         let controller = ResultViewController(withDotCoordinates: [
-         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10)),
-         Coordinate(Float.random(in: -10...10), Float.random(in: -10...10))
-         ])
-         present(controller, animated: true, completion: nil)
-         */
+        mappingStatus = getNextMappintStatus(mappingStatus: mappingStatus)
+        //        presentDebugResultView()
     }
+    #endif
 
     // MARK: - Helpers
 
@@ -235,14 +217,13 @@ class MappingViewController: UIViewController {
         actionButtonStack.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
                                  paddingLeft: 20, paddingBottom: 20)
 
-        // DEBUG用の設定
-        if ProcessInfo.processInfo.environment["DEBUGGING"] == "1" {
-            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        #if DEBUG
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        view.addSubview(debugButton)
+        debugButton.centerX(inView: view)
+        debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
+        #endif
 
-            view.addSubview(debugButton)
-            debugButton.centerX(inView: view)
-            debugButton.anchor(bottom: actionButtonStack.topAnchor, paddingBottom: 20)
-        }
     }
 
     private func configureStatusLabel() {

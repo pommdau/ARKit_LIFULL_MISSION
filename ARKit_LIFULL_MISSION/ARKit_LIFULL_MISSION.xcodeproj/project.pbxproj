@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AD35514925CE5B1200556C0C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD35514825CE5B1200556C0C /* ResultViewController.swift */; };
+		AD59E52225D41DD50091E8CF /* MappingViewController+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */; };
+		ADAC01DF25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC01DE25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests.swift */; };
 		ADE0DB8425CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */; };
 		D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */; };
 		D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */; };
@@ -26,8 +28,22 @@
 		D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB30D225BDCA5B00F83325 /* PlaneNode.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		ADAC01E125D511FD00E79731 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0EB30B025BDC22900F83325 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0EB30B725BDC22900F83325;
+			remoteInfo = ARKit_LIFULL_MISSION;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		AD35514825CE5B1200556C0C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MappingViewController+Debug.swift"; sourceTree = "<group>"; };
+		ADAC01DC25D511FC00E79731 /* ARKit_LIFULL_MISSIONTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARKit_LIFULL_MISSIONTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADAC01DE25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARKit_LIFULL_MISSIONTests.swift; sourceTree = "<group>"; };
+		ADAC01E025D511FD00E79731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADE0DB8325CEEE6800A9F30E /* SCNVector3+CalculateDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+CalculateDistance.swift"; sourceTree = "<group>"; };
 		D018DC1225BF310D009D3CDC /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		D018DC1625BF3FBA009D3CDC /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
@@ -49,6 +65,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		ADAC01D925D511FC00E79731 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0EB30B525BDC22900F83325 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -59,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ADAC01DD25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC01DE25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests.swift */,
+				ADAC01E025D511FD00E79731 /* Info.plist */,
+			);
+			path = ARKit_LIFULL_MISSIONTests;
+			sourceTree = "<group>";
+		};
 		ADF7D35B25CFC4B3001D6A1C /* ResultImageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				D0EB30BF25BDC22900F83325 /* MappingViewController.swift */,
+				AD59E52125D41DD50091E8CF /* MappingViewController+Debug.swift */,
 				AD35514825CE5B1200556C0C /* ResultViewController.swift */,
 			);
 			path = ViewController;
@@ -104,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				D0EB30BA25BDC22900F83325 /* ARKit_LIFULL_MISSION */,
+				ADAC01DD25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests */,
 				D0EB30B925BDC22900F83325 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				D0EB30B825BDC22900F83325 /* ARKit_LIFULL_MISSION.app */,
+				ADAC01DC25D511FC00E79731 /* ARKit_LIFULL_MISSIONTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,6 +170,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		ADAC01DB25D511FC00E79731 /* ARKit_LIFULL_MISSIONTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADAC01E525D511FD00E79731 /* Build configuration list for PBXNativeTarget "ARKit_LIFULL_MISSIONTests" */;
+			buildPhases = (
+				ADAC01D825D511FC00E79731 /* Sources */,
+				ADAC01D925D511FC00E79731 /* Frameworks */,
+				ADAC01DA25D511FC00E79731 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADAC01E225D511FD00E79731 /* PBXTargetDependency */,
+			);
+			name = ARKit_LIFULL_MISSIONTests;
+			productName = ARKit_LIFULL_MISSIONTests;
+			productReference = ADAC01DC25D511FC00E79731 /* ARKit_LIFULL_MISSIONTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D0EB30B725BDC22900F83325 /* ARKit_LIFULL_MISSION */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0EB30CC25BDC22C00F83325 /* Build configuration list for PBXNativeTarget "ARKit_LIFULL_MISSION" */;
@@ -159,9 +212,13 @@
 		D0EB30B025BDC22900F83325 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
+					ADAC01DB25D511FC00E79731 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = D0EB30B725BDC22900F83325;
+					};
 					D0EB30B725BDC22900F83325 = {
 						CreatedOnToolsVersion = 12.3;
 					};
@@ -181,11 +238,19 @@
 			projectRoot = "";
 			targets = (
 				D0EB30B725BDC22900F83325 /* ARKit_LIFULL_MISSION */,
+				ADAC01DB25D511FC00E79731 /* ARKit_LIFULL_MISSIONTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		ADAC01DA25D511FC00E79731 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0EB30B625BDC22900F83325 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +284,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		ADAC01D825D511FC00E79731 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADAC01DF25D511FD00E79731 /* ARKit_LIFULL_MISSIONTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0EB30B425BDC22900F83325 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +301,7 @@
 				D018DC1325BF310D009D3CDC /* UIColor+Extensions.swift in Sources */,
 				D0EB30C025BDC22900F83325 /* MappingViewController.swift in Sources */,
 				D018DC1725BF3FBA009D3CDC /* UIView+AutoLayout.swift in Sources */,
+				AD59E52225D41DD50091E8CF /* MappingViewController+Debug.swift in Sources */,
 				D0CF294925BF13C4002347EA /* DotNode.swift in Sources */,
 				D0EB30D325BDCA5B00F83325 /* PlaneNode.swift in Sources */,
 				D07D4F2B25CAE0F10051376C /* ResultImageView.swift in Sources */,
@@ -242,6 +316,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		ADAC01E225D511FD00E79731 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0EB30B725BDC22900F83325 /* ARKit_LIFULL_MISSION */;
+			targetProxy = ADAC01E125D511FD00E79731 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		D0EB30C625BDC22C00F83325 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -254,6 +336,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		ADAC01E325D511FD00E79731 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BWMJMJK727;
+				INFOPLIST_FILE = ARKit_LIFULL_MISSIONTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ikeh1024.ARKit-LIFULL-MISSIONTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARKit_LIFULL_MISSION.app/ARKit_LIFULL_MISSION";
+			};
+			name = Debug;
+		};
+		ADAC01E425D511FD00E79731 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BWMJMJK727;
+				INFOPLIST_FILE = ARKit_LIFULL_MISSIONTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ikeh1024.ARKit-LIFULL-MISSIONTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARKit_LIFULL_MISSION.app/ARKit_LIFULL_MISSION";
+			};
+			name = Release;
+		};
 		D0EB30CA25BDC22C00F83325 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -378,6 +502,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BWMJMJK727;
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -399,6 +524,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BWMJMJK727;
+				EXCLUDED_SOURCE_FILE_NAMES = "*+Debug.swift";
 				INFOPLIST_FILE = ARKit_LIFULL_MISSION/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -415,6 +541,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		ADAC01E525D511FD00E79731 /* Build configuration list for PBXNativeTarget "ARKit_LIFULL_MISSIONTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADAC01E325D511FD00E79731 /* Debug */,
+				ADAC01E425D511FD00E79731 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D0EB30B325BDC22900F83325 /* Build configuration list for PBXProject "ARKit_LIFULL_MISSION" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
