@@ -2,7 +2,7 @@
 
 # 概要
 
-- 概要は以下のページ 
+- 概要は以下の通り
 >[ARKit でお部屋の間取り画像を作ってみよう](https://techbowl.co.jp/techtrain/missions/5)
 >ARKit で平面を認識する
 >ARKit で認識した平面状にオブジェクトを設置する
@@ -14,23 +14,33 @@
 - 求める成果物のイメージ
 	- [LIFULL HOME’S iPhoneアプリがiOS11新機能「ARkit」に対応](https://lifull.com/news/10468/)
 
-# ScreenShots
+# GibHub
+
+TODO: URL
+
+# スクリーンショット
 
 ## 計測画面
+- 初めに計測したい平面の検出を行います。
 
-<img width="512" alt="image" src="https://imgur.com/Fc77I2D.png">
+<img width="400" alt="image" src="https://imgur.com/n5xFMLc.jpg">
 
 ## 計測範囲の設定
+- 平面の検出が行われたあと、画面をタップして点を追加します。
+- 計測したい範囲を点で囲むように点を追加していってください。
+- 左下のボタンは上からそれぞれ下記の動作を行います。
+    - 追加されている点をすべて削除する
+    - 追加されている最新の点を1つ削除する
 
-<img width="512" alt="image" src="https://imgur.com/59xhlq7.png">
+<img width="400" alt="image" src="https://imgur.com/ewNcBDs.jpg">
 
 ## 計測結果画面
+- 計測が完了したあと指定された範囲を表示します。
 
-<img width="512" alt="image" src="https://imgur.com/aBiP6VD.png">
+<img width="400" alt="image" src="https://imgur.com/xdYNoTe.jpg">
 
-# DotNodeの平面追加のロジック
-
-- 最初のDotNodeは検出面のみを対象とする
+# 平面への点の追加ルール
+- 最初の点(以下DotNodeと呼ぶ)は検出面のみを対象とする
   - 常に検出平面で近いものが採用されてしまうのを防ぐため
 - 2つ目以降は検出面を無限に延長した面を対象とし、hitTestのうち最初のDotNodeともっともy座標の差が小さいものを採用する
 
@@ -71,7 +81,7 @@ func convertToCoordinate() -> Coordinate {
 
 ## 画像作成の流れ
 - `UIView`のカスタムクラスを作成しそこで描画を行う。
-- 最後にサイズを指定して`UIView`を`UIImage`に変換する流れ
+- 最後にサイズを指定して`UIView`を`UIImage`に変換する流れ。
 
 ```swift
 let resultImageView = ResultImageView(dotCoordinates: dotCoordinates)
@@ -82,18 +92,32 @@ guard let image = resultImageView.convertToImage() else {
 ```
 
 ## 座標の変換
+- 具体的なコードは`CoordinateManager.swift`を参照
 
-### 1. 座標の変換
+### ①: 座標の変換
+- 回転行列を使って特定の辺が画面横に向かって平行になるように全座標を回転させる。
+    - 今回は最大の辺が並行になるように回転を行う。
 - [Working with Matrices ](https://developer.apple.com/documentation/accelerate/working_with_matrices)
+    - Swiftでの回転行列の作成と座標変換
+
+### ③: 全座標のx,y座標の値が0以上の値になるよう平行移動させる
+- 全座標のx,y座標の最小値を取り、それらを全座標の値から引いてやれば良い
+
+### ④ ⑤: 座標値を描画範囲に対する％へ変換
+- 最終的に、今のドットの座標を与えられた描画範囲(0-100%)に対して何%の位置に描画するかとしての割合に変換したい。
+- よって座標を0-100の範囲に収まるように変換を行う。
+- また今回はViewで描画する際、5%のマージンを持たせたいので、5-95の範囲に収まるように変換を行っていく。
+- まず画像の④の通り0-90の範囲で座標を変換し、⑤の通りマージンの5%分を加えて5-95の範囲へと補正を行う。
 
 <img width="512" alt="image" src="https://imgur.com/qSYawgo.jpg">
 
+### ⑥: 中央に描画されるように座標変換
+- 最後に描画する図形が中央に位置するように座標の補正を行う。
+
 <img width="512" alt="image" src="https://imgur.com/QMSZ4Bu.jpg">
 
-
-
 # その他得られた知見
-## ステートメントを必要としないメソッドはExtensionとして定義する
+## ステートメントを必要としないメソッドをExtensionとして定義する
 
 - 下記のような状態によって変わらない、単純な変数だけのメソッドはextensionに切り分けるといい。
 
@@ -124,7 +148,7 @@ extension SCNVector3 {
 
 <img width="512" alt="image" src="https://i.imgur.com/fJeg6aG.png">
 
-- 上記の命名規則に則り`MappingViewController+Debug.swift`にデバッグ用のメソッドを書く。
+- 上記の命名規則に則り`MappingViewController+Debug.swift`というファイルを作成し、デバッグ用のメソッドを書く。
 
 ```swift
 extension MappingViewController {
@@ -157,9 +181,19 @@ extension MappingViewController {
     #endif
 ```
 
+## typealiasの話
+- `typealias`は`struct`に対しては安全で問題ないとのこと
+    - [simd\_float2 \| Apple Developer Documentation](https://developer.apple.com/documentation/simd/simd_float2): structですね。
+- 一方`Class`に対しては参照が伴うので危険。
+
+```swift
+typealias Coordinate = simd_float2  // これは安全
+```
 
 # 参考
 - [詳細! Swift 4 iPhoneアプリ開発 入門ノート Swift 4](www.amazon.co.jp/dp/4800711843)
-	- ARの触りとして。解説が詳しくないので補足は必要。
+	- ARの触りとして。解説が詳しくないので補足は別途必要そう。
 - [iOS & Swift \- The Complete iOS App Development Bootcamp \| Udemy](https://www.udemy.com/course/ios-13-app-development-bootcamp/)のARパート
-	- 平面検出やNodeの作成方法など、AR周りの基本を参照
+	- 平面検出やNodeの作成方法など、AR周りの基本を参照。
+- [\[Swift 4\] UIBezierPathを使って遊んでみる\(その1\) \| DevelopersIO](https://dev.classmethod.jp/articles/play-uibezierpath-1/)<br>[\[Swift 4\] UIBezierPathを使って遊んでみる\(その2\) \| DevelopersIO](https://dev.classmethod.jp/articles/play-uibezierpath-2/)
+    - 描画や座標の扱いに関して主に参考にした。
