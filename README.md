@@ -74,8 +74,11 @@ private enum MappingStatus {
 ```swift
 typealias Coordinate = simd_float2
 ------------------------------------------
-func convertToCoordinate() -> Coordinate {
-    Coordinate(position.x, position.z)
+class DotNode: SCNNode {
+    // ...
+    func convertToCoordinate() -> Coordinate {
+        Coordinate(position.x, position.z)
+    }
 }
 ```
 
@@ -144,7 +147,7 @@ extension SCNVector3 {
 ## デバッグ設定の分離
 - Releaseのときファイルをコンパイルしないように設定と`#ifdef DEBUG`により、デバッグ部分が誤ってリリースされないようにしておく。
 	- [iOSで開発向け機能の実装する時に使うテクニック](https://qiita.com/t_osawa_009/items/6080037f20acdec1b239)
-- 以下の通りReleaseで- `*+Debug.swift`のファイルを無視するように設定する
+- 以下の通りSuffixを指定し、Releaseで`*+Debug.swift`のファイルを無視するように設定する
 
 <img width="512" alt="image" src="https://i.imgur.com/fJeg6aG.png">
 
@@ -189,6 +192,10 @@ extension MappingViewController {
 ```swift
 typealias Coordinate = simd_float2  // これは安全
 ```
+
+## テストコードの話
+
+
 
 # 参考
 - [詳細! Swift 4 iPhoneアプリ開発 入門ノート Swift 4](www.amazon.co.jp/dp/4800711843)
