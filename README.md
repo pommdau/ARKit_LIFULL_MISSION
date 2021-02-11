@@ -95,7 +95,7 @@ guard let image = resultImageView.convertToImage() else {
 ```
 
 ## 座標の変換
-- 具体的なコードは`CoordinateManager.swift`を参照
+- 具体的なコードは[CoordinateManager.swift](https://github.com/pommdau/ARKit_LIFULL_MISSION/blob/main/ARKit_LIFULL_MISSION/ARKit_LIFULL_MISSION/ResultImageView/CoordinateManager.swift)を参照
 
 ### ①: 座標の変換
 - 回転行列を使って特定の辺が画面横に向かって平行になるように全座標を回転させる。
@@ -104,12 +104,12 @@ guard let image = resultImageView.convertToImage() else {
     - Swiftでの回転行列の作成と座標変換
 
 ### ③: 全座標のx,y座標の値が0以上の値になるよう平行移動させる
-- 全座標のx,y座標の最小値を取り、それらを全座標の値から引いてやれば良い
+- 全座標のx,y座標の最小値を取り、それらを全座標の値から引いてやれば良い。
 
 ### ④ ⑤: 座標値を描画範囲に対する％へ変換
 - 最終的に、今のドットの座標を与えられた描画範囲(0-100%)に対して何%の位置に描画するかとしての割合に変換したい。
 - よって座標を0-100の範囲に収まるように変換を行う。
-- また今回はViewで描画する際、5%のマージンを持たせたいので、5-95の範囲に収まるように変換を行っていく。
+- また今回はViewで描画する際周りに5%のマージンを持たせるので、5-95の範囲に収まるように変換を行う。
 - まず画像の④の通り0-90の範囲で座標を変換し、⑤の通りマージンの5%分を加えて5-95の範囲へと補正を行う。
 
 <img width="512" alt="image" src="https://imgur.com/qSYawgo.jpg">
@@ -141,8 +141,7 @@ extension SCNVector3 {
 ## SwiftLintの導入
 - SwiftLintを導入した。設定や導入方法は下記の通り。
 	- [pommdau/SwiftLint\-Config](https://github.com/pommdau/SwiftLint-Config)
-- 色々指摘してもらえるので、まず入れておくと間違いないなと感じた。(私はSwiftLint先生と呼んでいる)
-- ルール定義の`.yml`ファイルはリモートに置いて使い回せるのが便利。
+- ルール定義の`.yml`ファイルはリモートに置いて置くと使い回せて便利。
 
 ## デバッグ設定の分離
 - Releaseのときファイルをコンパイルしないように設定と`#ifdef DEBUG`により、デバッグ部分が誤ってリリースされないようにしておく。
@@ -167,7 +166,7 @@ extension MappingViewController {
 }
 ```
 
-- 本体のコードには`#ifdef DEBUG`でリリース時にコンパイルされないようにしておく
+- 本体のコードには`#ifdef DEBUG`でリリース時にコンパイルされないようにしておく。
 
 ```swift
     #if DEBUG
