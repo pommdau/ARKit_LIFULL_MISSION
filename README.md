@@ -194,8 +194,36 @@ typealias Coordinate = simd_float2  // これは安全
 ```
 
 ## テストコードの話
+- ステートメントを伴わない関数はテストコードが書きやすい。
+- extensionの一部でテストコードを書いてみた。
+    - [Xcode11\.6で既存プロジェクトにUnitTestを追加する方法](https://program-life.com/1772)
+    - テストの書き方はSwift実践入門を参考にした
 
+```swift
+//  ARKit_LIFULL_MISSIONTests.swift
+//  ARKit_LIFULL_MISSIONTests
 
+import XCTest
+import SceneKit
+@testable import ARKit_LIFULL_MISSION
+
+class ARKit_LIFULL_MISSIONTests: XCTestCase {
+
+    func testSCNVector3_CalculateDistance() {
+        XCTAssertEqual(
+            SCNVector3.calculateDistance(from: SCNVector3(0, 0, 0), to: SCNVector3(10, 20, 30)),
+            sqrt(1400)
+        )
+    }
+    
+    func testCoordinate_CalculateDistance() {
+        XCTAssertEqual(
+            Coordinate.calculateDistance(from: Coordinate(0, 0), to: Coordinate(10, 20)),
+            sqrt(500)
+        )
+    } 
+}
+```
 
 # 参考
 - [詳細! Swift 4 iPhoneアプリ開発 入門ノート Swift 4](www.amazon.co.jp/dp/4800711843)
@@ -204,3 +232,5 @@ typealias Coordinate = simd_float2  // これは安全
 	- 平面検出やNodeの作成方法など、AR周りの基本を参照。
 - [\[Swift 4\] UIBezierPathを使って遊んでみる\(その1\) \| DevelopersIO](https://dev.classmethod.jp/articles/play-uibezierpath-1/)<br>[\[Swift 4\] UIBezierPathを使って遊んでみる\(その2\) \| DevelopersIO](https://dev.classmethod.jp/articles/play-uibezierpath-2/)
     - 描画や座標の扱いに関して主に参考にした。
+- Swift実践入門
+    - 諸々の文法等で参考にした。
