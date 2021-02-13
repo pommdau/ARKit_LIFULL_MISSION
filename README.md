@@ -14,7 +14,7 @@
 - 求める成果物のイメージ
 	- [LIFULL HOME’S iPhoneアプリがiOS11新機能「ARkit」に対応](https://lifull.com/news/10468/)
 
-# GibHub
+# GitHub
 
 https://github.com/pommdau/ARKit_LIFULL_MISSION
 
